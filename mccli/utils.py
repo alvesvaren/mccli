@@ -2,7 +2,13 @@ from io import FileIO
 from typing import Dict, List, Union
 from enum import Enum
 import requests
+import json
+from pathlib import Path
 
+with open(Path(__file__).parent.joinpath("options.json").resolve()) as file:
+    OPTIONS: dict = json.load(file)
+    URLS: Dict[str, str] = OPTIONS["urls"]
+    PAPER_BASE_URL = URLS["papermc"].rstrip("/")
 
 class ServerProvider(Enum):
     """
@@ -18,16 +24,44 @@ class ServerType(Enum):
 
 
 class ServerVersion():
-    def __init__(self, name: str, url: str, provider: ServerProvider):
+    def __init__(self, name: str, provider: ServerProvider, url: str = None):
         self.name = name
-        self.url = url
-        self.type = provider
+        self.provider = provider
+        self._url = url
+
+    @property
+    def url(self) -> str:
+        return self._url
 
     def __repr__(self):
-        return f"<ServerVersion name='{self.name}' url='{self.url}' type='{self.type}'>"
+        return f"<ServerVersion name='{self.name}' type='{self.provider}'>"
 
     def download(self) -> bytes:
         return requests.get(self.url).content
+
+
+class VanillaVersion(ServerVersion):
+    def __init__(self, name: str, manifest: dict):
+        super().__init__(name, ServerProvider.VANILLA)
+        self._manifest = manifest
+
+    @property
+    def url(self) -> str:
+        if not self._url:
+            version_data = requests.get(self._manifest["url"]).json()
+            self._url = version_data["downloads"]["server"]["url"]
+        return super().url
+
+class PaperVersion(ServerVersion):
+    def __init__(self, name: str):
+        super().__init__(name, ServerProvider.PAPERMC)
+    
+    @property
+    def url(self) -> str:
+        if not self._url:
+            version_data = requests.get(f"{PAPER_BASE_URL}/{self.name}").json()
+            self._url = f"{PAPER_BASE_URL}/{self.name}/{version_data['builds']['latest']}/download"
+        return super().url
 
 
 def confirm(msg: str, default: bool = False) -> bool:

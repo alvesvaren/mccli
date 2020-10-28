@@ -1,37 +1,30 @@
-import requests
-import json
 from .utils import *
 
-with open("options.json") as file:
-    OPTIONS = json.load(file)
-    URLS = OPTIONS["urls"]
 
-
-def get_vanilla_versions() -> List[ServerProvider]:
+def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False) -> List[ServerProvider]:
     versions: List[ServerVersion] = []
 
     manifest = requests.get(URLS["vanilla"]).json()
+    manifest_versions: List[dict] = manifest["versions"]
+    
     for version in manifest["versions"]:
-        version_data = requests.get(version["url"]).json()
-        url = version_data["downloads"]["server"]
-        versions.append(ServerVersion(
-            version["id"], url, ServerProvider.VANILLA))
+        if not snapshots and version["type"] == ServerType.SNAPSHOT.value:
+            continue
+        if not releases and version["type"] == ServerType.RELEASE.value:
+            continue
+        versions.append(VanillaVersion(
+            version["id"], version))
     return versions
 
 
-def get_paper_versions(all_builds: bool = False) -> List[ServerProvider]:
+def get_paper_versions() -> List[ServerProvider]:
     versions: List[ServerVersion] = []
-
-    base_url: str = URLS["papermc"].rstrip("/")
-    provided_versions = requests.get(base_url).json()
+    
+    provided_versions = requests.get(PAPER_BASE_URL).json()
     for version in provided_versions["versions"]:
-        version_data = requests.get(base_url + "/" + version)
-        if all_builds:
-            for build in version_data["builds"]["all"]:
-                versions.append(ServerVersion(
-                    version + "-" + build,
-                    f"{base_url}/{version}/{build}/download",
-                    ServerProvider.PAPERMC))
+        versions.append(PaperVersion(version))
+
+    return versions
 
 
 def get_versions(provider: ServerProvider) -> List[ServerVersion]:
