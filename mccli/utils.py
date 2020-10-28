@@ -11,6 +11,7 @@ class ServerProvider(Enum):
     PAPERMC = "papermc"
     SPIGOT = "spigot"
 
+
 class ServerType(Enum):
     SNAPSHOT = "snapshot"
     RELEASE = "release"
