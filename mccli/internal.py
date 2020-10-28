@@ -31,8 +31,7 @@ def get_paper_versions(all_builds: bool = False) -> List[ServerProvider]:
                 versions.append(ServerVersion(
                     version + "-" + build,
                     f"{base_url}/{version}/{build}/download",
-                    ServerProvider.PAPERMC)
-                )
+                    ServerProvider.PAPERMC))
 
 
 def get_versions(provider: ServerProvider) -> List[ServerVersion]:
@@ -42,6 +41,6 @@ def get_versions(provider: ServerProvider) -> List[ServerVersion]:
 
     elif provider == ServerProvider.PAPERMC:
         return get_paper_versions()
-    
+
     elif provider == ServerProvider.SPIGOT:
         raise NotImplementedError("Spigot support is not implemented")
