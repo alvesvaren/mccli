@@ -1,4 +1,32 @@
+from io import FileIO
 from typing import Dict, List, Union
+from enum import Enum
+import requests
+
+
+class ServerProvider(Enum):
+    """
+    """
+    VANILLA = "vanilla"
+    PAPERMC = "papermc"
+    SPIGOT = "spigot"
+
+class ServerType(Enum):
+    SNAPSHOT = "snapshot"
+    RELEASE = "release"
+
+
+class ServerVersion():
+    def __init__(self, name: str, url: str, provider: ServerProvider):
+        self.name = name
+        self.url = url
+        self.type = provider
+
+    def __repr__(self):
+        return f"<ServerVersion name='{self.name}' url='{self.url}' type='{self.type}'>"
+
+    def download(self) -> bytes:
+        return requests.get(self.url).content
 
 
 def confirm(msg: str, default: bool = False) -> bool:
