@@ -1,7 +1,7 @@
 from .utils import *
 
 
-def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False) -> List[ServerProvider]:
+def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False) -> List[ServerVersion]:
     """
     Get a list of server versions avalible for download from the vanilla provider
 
@@ -23,7 +23,7 @@ def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False) -> L
     return versions
 
 
-def get_paper_versions() -> List[ServerProvider]:
+def get_paper_versions() -> List[ServerVersion]:
     """
     Get a list of server versions avalible for download from the paper provider
 
