@@ -22,13 +22,15 @@ class ServerProvider(Enum):
 class ServerType(Enum):
     SNAPSHOT = "snapshot"
     RELEASE = "release"
+    UNKNOWN = None
 
 
 class ServerVersion():
-    def __init__(self, name: str, provider: ServerProvider, url: str = None):
+    def __init__(self, name: str, provider: ServerProvider, url: str = None, server_type: ServerType = ServerType.UNKNOWN):
         self.name = name
         self.provider = provider
         self._url = url
+        self.server_type = server_type
 
     @property
     def url(self) -> str:
@@ -63,7 +65,7 @@ class ServerVersion():
 
 class VanillaVersion(ServerVersion):
     def __init__(self, name: str, manifest: dict):
-        super().__init__(name, ServerProvider.VANILLA)
+        super().__init__(name, ServerProvider.VANILLA, server_type=manifest["type"])
         self._manifest = manifest
 
     def _get_url(self) -> str:
