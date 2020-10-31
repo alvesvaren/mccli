@@ -18,7 +18,7 @@ def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False, old_
             continue
         if not releases and version["type"] == VanillaVersionType.RELEASE.value:
             continue
-        if not old_versions and version["type"] in (VanillaVersionType.OLD_ALPHA, VanillaVersionType.OLD_BETA):
+        if not old_versions and version["type"] in (VanillaVersionType.OLD_ALPHA.value, VanillaVersionType.OLD_BETA.value):
             continue
         versions.append(VanillaVersion(
             version["id"], version))
