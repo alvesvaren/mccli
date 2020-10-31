@@ -67,7 +67,7 @@ class VanillaVersion(ServerVersion):
     def __init__(self, name: str, manifest: dict):
         super().__init__(name, ServerProvider.VANILLA)
         self._manifest = manifest
-        self.version_type: VanillaVersionType = manifest["type"]
+        self.version_type: VanillaVersionType = VanillaVersionType(manifest["type"])
 
     def _get_url(self) -> str:
         version_data = requests.get(self._manifest["url"]).json()

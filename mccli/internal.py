@@ -1,7 +1,7 @@
 from .utils import *
 
 
-def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False, old_versions: bool = False) -> List[ServerVersion]:
+def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False, old_versions: bool = False, all_versions: bool = False) -> List[ServerVersion]:
     """
     Get a list of server versions avalible for download from the vanilla provider
 
@@ -14,12 +14,14 @@ def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False, old_
     manifest = requests.get(URLS["vanilla"]).json()
 
     for version in manifest["versions"]:
-        if not snapshots and version["type"] == VanillaVersionType.SNAPSHOT.value:
-            continue
-        if not releases and version["type"] == VanillaVersionType.RELEASE.value:
-            continue
-        if not old_versions and version["type"] in (VanillaVersionType.OLD_ALPHA.value, VanillaVersionType.OLD_BETA.value):
-            continue
+        version_type = VanillaVersionType(version["type"])
+        if not all_versions:
+            if (not snapshots and version_type == VanillaVersionType.SNAPSHOT):
+                continue
+            if not releases and version_type == VanillaVersionType.RELEASE:
+                continue
+            if not old_versions and version_type in (VanillaVersionType.OLD_ALPHA, VanillaVersionType.OLD_BETA):
+                continue
         versions.append(VanillaVersion(
             version["id"], version))
     return versions
