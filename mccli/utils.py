@@ -10,6 +10,7 @@ with open(Path(__file__).parent.joinpath("options.json").resolve()) as file:
     URLS: Dict[str, str] = OPTIONS["urls"]
     PAPER_BASE_URL = URLS["papermc"].rstrip("/")
 
+
 class ServerProvider(Enum):
     """
     """
@@ -31,6 +32,11 @@ class ServerVersion():
 
     @property
     def url(self) -> str:
+        """
+        Get the download url for the server binary
+        """
+        if not self._url:
+            self._url = self._get_url()
         return self._url
 
     def __repr__(self):
@@ -39,29 +45,31 @@ class ServerVersion():
     def download(self) -> bytes:
         return requests.get(self.url).content
 
+    def _get_url(self) -> str:
+        """
+        Internal function to fetch url, needs to be implemented in order to be used 
+        """
+        raise NotImplementedError(
+            "This type of server version does not support download urls")
+
 
 class VanillaVersion(ServerVersion):
     def __init__(self, name: str, manifest: dict):
         super().__init__(name, ServerProvider.VANILLA)
         self._manifest = manifest
 
-    @property
-    def url(self) -> str:
-        if not self._url:
-            version_data = requests.get(self._manifest["url"]).json()
-            self._url = version_data["downloads"]["server"]["url"]
-        return super().url
+    def _get_url(self) -> str:
+        version_data = requests.get(self._manifest["url"]).json()
+        return version_data["downloads"]["server"]["url"]
+
 
 class PaperVersion(ServerVersion):
     def __init__(self, name: str):
         super().__init__(name, ServerProvider.PAPERMC)
-    
-    @property
-    def url(self) -> str:
-        if not self._url:
-            version_data = requests.get(f"{PAPER_BASE_URL}/{self.name}").json()
-            self._url = f"{PAPER_BASE_URL}/{self.name}/{version_data['builds']['latest']}/download"
-        return super().url
+
+    def _get_url(self) -> str:
+        version_data = requests.get(f"{PAPER_BASE_URL}/{self.name}").json()
+        return f"{PAPER_BASE_URL}/{self.name}/{version_data['builds']['latest']}/download"
 
 
 def confirm(msg: str, default: bool = False) -> bool:
