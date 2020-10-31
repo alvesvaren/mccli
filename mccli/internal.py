@@ -3,7 +3,7 @@ from .utils import *
 
 def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False, old_versions: bool = False, all_versions: bool = False) -> List[ServerVersion]:
     """
-    Get a list of server versions avalible for download from the vanilla provider
+    Get a list of server versions avalible for download from the vanilla provider matching the arguments, defaults to all official full releases.
 
     ```py
     versions = mccli.get_vanilla_versions(snapshots=True)
