@@ -46,7 +46,6 @@ class ServerVersion():
         """
         Retrun a file object containing the downloaded server binary
 
-        Usage: 
         ```py
         with open("server.jar", "wb") as file:
             file.write(serverVersion.download())
@@ -85,7 +84,6 @@ def confirm(msg: str, default: bool = False) -> bool:
     """
     Ask the user to confirm an action.
 
-    Usage:
     ```py
     if confirm("Continue?", True):
         print("Ok!")
@@ -107,7 +105,6 @@ def choice(msg: str, alternatives: List[str], default: int = 0) -> int:
     """
     Display multiple choice dialog to select between a list of alternatives
 
-    Usage:
     ```py
     if choice("What is your favorite color?", ["Red", "Green", "Blue"], 1) == 2:
         print("Ok, blue is your favorite color.")

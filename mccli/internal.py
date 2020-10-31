@@ -5,7 +5,6 @@ def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False) -> L
     """
     Get a list of server versions avalible for download from the vanilla provider
 
-    Usage:
     ```py
     versions = mccli.get_vanilla_versions(snapshots=True)
     latest_version = versions[0]
@@ -28,7 +27,6 @@ def get_paper_versions() -> List[ServerProvider]:
     """
     Get a list of server versions avalible for download from the paper provider
 
-    Usage:
     ```py
     versions = mccli.get_paper_versions()
     latest_version = versions[0]
@@ -47,7 +45,6 @@ def get_versions(provider: ServerProvider) -> List[ServerVersion]:
     """
     Get a list of server versions from the provided provider
 
-    Usage:
     ```py
     versions = mccli.get_versions(mccli.ServerProvider.PAPER)
     latest_version = versions[0]
