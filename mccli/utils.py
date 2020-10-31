@@ -43,6 +43,15 @@ class ServerVersion():
         return f"<ServerVersion name='{self.name}' type='{self.provider}'>"
 
     def download(self) -> bytes:
+        """
+        Retrun a file object containing the downloaded server binary
+
+        Usage: 
+        ```py
+        with open("server.jar", "wb") as file:
+            file.write(serverVersion.download())
+        ```
+        """
         return requests.get(self.url).content
 
     def _get_url(self) -> str:
