@@ -33,7 +33,7 @@ def get_paper_versions() -> List[ServerProvider]:
     ```
     """
     versions: List[ServerVersion] = []
-    
+
     provided_versions = requests.get(PAPER_BASE_URL).json()
     for version in provided_versions["versions"]:
         versions.append(PaperVersion(version))
