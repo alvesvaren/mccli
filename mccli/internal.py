@@ -42,6 +42,14 @@ def get_paper_versions() -> List[ServerProvider]:
 
 
 def get_versions(provider: ServerProvider) -> List[ServerVersion]:
+    """
+    Get a list of server versions from the provided provider
+    Usage:
+    ```py
+    versions = mccli.get_versions(mccli.ServerProvider.PAPER)
+    latest_version = versions[0]
+    ```
+    """
 
     if provider == ServerProvider.VANILLA:
         return get_vanilla_versions()
