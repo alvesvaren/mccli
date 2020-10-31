@@ -10,27 +10,27 @@ with open(Path(__file__).parent.joinpath("options.json").resolve()) as file:
     URLS: Dict[str, str] = OPTIONS["urls"]
     PAPER_BASE_URL = URLS["papermc"].rstrip("/")
 
-
 class ServerProvider(Enum):
     """
+    Represents a server provider like vanilla or papermc for a server version
     """
     VANILLA = "vanilla"
     PAPERMC = "papermc"
     SPIGOT = "spigot"
 
 
-class ServerType(Enum):
+class VanillaVersionType(Enum):
     SNAPSHOT = "snapshot"
     RELEASE = "release"
-    UNKNOWN = None
+    OLD_ALPHA = "old_alpha"
+    OLD_BETA = "old_beta"
 
 
 class ServerVersion():
-    def __init__(self, name: str, provider: ServerProvider, url: str = None, server_type: ServerType = ServerType.UNKNOWN):
+    def __init__(self, name: str, provider: ServerProvider, url: str = None):
         self.name = name
         self.provider = provider
         self._url = url
-        self.server_type = server_type
 
     @property
     def url(self) -> str:
@@ -65,8 +65,9 @@ class ServerVersion():
 
 class VanillaVersion(ServerVersion):
     def __init__(self, name: str, manifest: dict):
-        super().__init__(name, ServerProvider.VANILLA, server_type=manifest["type"])
+        super().__init__(name, ServerProvider.VANILLA)
         self._manifest = manifest
+        self.version_type: VanillaVersionType = manifest["type"]
 
     def _get_url(self) -> str:
         version_data = requests.get(self._manifest["url"]).json()
