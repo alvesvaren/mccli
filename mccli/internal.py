@@ -4,6 +4,7 @@ from .utils import *
 def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False) -> List[ServerProvider]:
     """
     Get a list of server versions avalible for download from the vanilla provider
+
     Usage:
     ```py
     versions = mccli.get_vanilla_versions(snapshots=True)
@@ -26,6 +27,7 @@ def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False) -> L
 def get_paper_versions() -> List[ServerProvider]:
     """
     Get a list of server versions avalible for download from the paper provider
+
     Usage:
     ```py
     versions = mccli.get_paper_versions()
@@ -44,6 +46,7 @@ def get_paper_versions() -> List[ServerProvider]:
 def get_versions(provider: ServerProvider) -> List[ServerVersion]:
     """
     Get a list of server versions from the provided provider
+
     Usage:
     ```py
     versions = mccli.get_versions(mccli.ServerProvider.PAPER)
