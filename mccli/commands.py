@@ -17,11 +17,11 @@ def select_version(*, verbose: bool = True) -> mccli.ServerVersion:
     provider = mccli.ServerProvider(
         providers[choice("Select provider", providers)])
     if verbose:
-        print()
-        print("Selected", provider.value, "provider.")
-        print("Fetching versions from provider...")
-        print()
+        print("\nSelected", provider.value, "provider.")
+        print("Fetching versions from provider...", end="")
     versions = mccli.get_versions(provider)
+    if verbose:
+        print("DONE!")
     version_name = custom_choice(
         f"Select version from {provider.value} provider", versions[0].name)
     selected_version = find_version(version_name, versions)
