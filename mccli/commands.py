@@ -5,7 +5,7 @@ import mccli
 
 def select_version(verbose: bool = True) -> mccli.ServerVersion:
     """
-    Allow the user to select version in the command line
+    Allow the user to select version
     """
 
     providers = ["vanilla", "papermc"]
