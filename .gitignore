@@ -143,8 +143,7 @@ cython_debug/
 ## VisualStudioCode.gitignore
 
 .vscode/*
-# breaks venv
-# !.vscode/settings.json
+!.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
