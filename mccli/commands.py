@@ -7,6 +7,11 @@ from pathlib import Path
 SERVER_BASE = Path(OPTIONS["paths"]["server_base"])
 os.chdir(SERVER_BASE)
 
+# Should be ran as root
+def setup(*, verbose: bool = True):
+    SERVER_BASE.mkdir(exist_ok=True)
+    # Create minecraft account
+    # Change ownership of SERVER_BASE to minecraft user and group
 
 def select_version(*, verbose: bool = True) -> mccli.ServerVersion:
     """
