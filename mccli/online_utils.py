@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Union
 import requests
 from enum import Enum 
 from . import utils
@@ -140,3 +140,11 @@ def get_versions(provider: ServerProvider) -> List[ServerVersion]:
 
     elif provider == ServerProvider.SPIGOT:
         raise NotImplementedError("Spigot support is not implemented")
+
+def find_version(name: str, versions: List[ServerVersion]) -> Union[ServerVersion, None]:
+    selected_version = None
+    for version in versions:
+        if version.name == name:
+            selected_version = version
+            break
+    return selected_version

@@ -5,6 +5,7 @@ from pathlib import Path
 with open(Path(__file__).parent.joinpath("options.json").resolve()) as file:
     OPTIONS: Dict[str, Union[dict, str, list]] = json.load(file)
 
+
 def confirm(msg: str, default: bool = False) -> bool:
     """
     Ask the user to confirm an action.
@@ -22,7 +23,7 @@ def confirm(msg: str, default: bool = False) -> bool:
             f"{msg} [{'Y/n' if default else 'y/N'}] ").strip().lower()
     except KeyboardInterrupt:
         print()
-        return False
+        raise KeyboardInterrupt
     return value in ["yes", "y"] or (default and not value)
 
 
@@ -46,9 +47,33 @@ def choice(msg: str, alternatives: List[str], default: int = 0) -> int:
             value = default
         else:
             value = int(value)
-    except (KeyboardInterrupt, ValueError):
-        print()
+    except ValueError:
         return -1
+    except KeyboardInterrupt:
+        print()
+        raise KeyboardInterrupt
     if value >= 0 and value < len(alternatives):
         return value
     return -1
+
+
+def custom_choice(msg: str, default: Union[str, None] = None) -> str:
+    """
+    Allow to enter any text and returns it
+
+    ```py
+    if choice("What is your favorite color?", ["Red", "Green", "Blue"], 1) == 2:
+        print("Ok, blue is your favorite color.")
+    ```
+    """
+
+    suffix = ""
+    if default:
+        suffix = f" [{default}]"
+    try:
+        value = input(
+            f"{msg}{suffix}: ").strip().lower()
+    except KeyboardInterrupt:
+        print()
+        raise KeyboardInterrupt
+    return value if value else default
