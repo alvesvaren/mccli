@@ -1,4 +1,7 @@
+from mccli.utils import VERSION
 from .commands import *
 
 if __name__ == "__main__":
-    pass
+    print("MCCLI Version", VERSION)
+    print()
+    create()

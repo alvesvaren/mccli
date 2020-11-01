@@ -3,5 +3,9 @@
         "papermc": "https://papermc.io/api/v1/paper",
         "vanilla": "https://launchermeta.mojang.com/mc/game/version_manifest.json",
         "spigot": "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
-    }
+    },
+    "paths": {
+        "server_base": "/opt/minecraft-servers"
+    },
+    "version": "dev"
 }

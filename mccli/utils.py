@@ -4,7 +4,7 @@ from pathlib import Path
 
 with open(Path(__file__).parent.joinpath("options.json").resolve()) as file:
     OPTIONS: Dict[str, Union[dict, str, list]] = json.load(file)
-
+    VERSION = OPTIONS["version"]
 
 def confirm(msg: str, default: bool = False) -> bool:
     """
@@ -60,11 +60,6 @@ def choice(msg: str, alternatives: List[str], default: int = 0) -> int:
 def custom_choice(msg: str, default: Union[str, None] = None) -> str:
     """
     Allow to enter any text and returns it
-
-    ```py
-    if choice("What is your favorite color?", ["Red", "Green", "Blue"], 1) == 2:
-        print("Ok, blue is your favorite color.")
-    ```
     """
 
     suffix = ""
