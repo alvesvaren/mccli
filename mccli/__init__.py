@@ -3,4 +3,3 @@ from .online_utils import (
     get_versions, PaperVersion, ServerProvider,
     ServerVersion, VanillaVersion, VanillaVersionType
 )
-from . import utils
