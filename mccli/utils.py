@@ -1,14 +1,9 @@
-from io import FileIO
 from typing import Dict, List, Union
-from enum import Enum
-import requests
 import json
 from pathlib import Path
 
 with open(Path(__file__).parent.joinpath("options.json").resolve()) as file:
-    OPTIONS: dict = json.load(file)
-    URLS: Dict[str, str] = OPTIONS["urls"]
-    PAPER_BASE_URL = URLS["papermc"].rstrip("/")
+    OPTIONS: Dict[str, Union[dict, str, list]] = json.load(file)
 
 def confirm(msg: str, default: bool = False) -> bool:
     """

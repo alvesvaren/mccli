@@ -1,4 +1,10 @@
-from .utils import *
+from typing import List, Dict
+import requests
+from enum import Enum 
+from . import utils
+
+URLS: Dict[str, str] = utils.OPTIONS["urls"]
+PAPER_BASE_URL = URLS["papermc"].rstrip("/")
 
 class ServerProvider(Enum):
     """
