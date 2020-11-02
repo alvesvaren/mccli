@@ -1,17 +1,16 @@
 from mccli.online_utils import find_version, get_versions
-from .utils import choice, confirm, OPTIONS, custom_choice
+from .utils import choice, confirm, OPTIONS, custom_choice, SERVER_BASE_PATH
 import mccli
 import os
 from pathlib import Path
 
-SERVER_BASE = Path(OPTIONS["paths"]["server_base"])
-os.chdir(SERVER_BASE)
+os.chdir(SERVER_BASE_PATH)
 
 # Should be ran as root
 def setup(*, verbose: bool = True):
-    SERVER_BASE.mkdir(exist_ok=True)
+    SERVER_BASE_PATH.mkdir(exist_ok=True)
     # Create minecraft account
-    # Change ownership of SERVER_BASE to minecraft user and group
+    # Change ownership of SERVER_BASE_PATH to minecraft user and group
 
 def select_version(*, verbose: bool = True) -> mccli.ServerVersion:
     """
@@ -43,7 +42,7 @@ def create(name: str = None, *, verbose: bool = True):
     if not name:
         name = custom_choice("What should the server be called?")
 
-    server_dir = SERVER_BASE.joinpath(name)
+    server_dir = SERVER_BASE_PATH.joinpath(name)
     server_dir.mkdir()
     version = select_version()
     if not version:
