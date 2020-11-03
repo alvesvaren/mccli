@@ -1,10 +1,11 @@
 from typing import List, Dict, Union
 import requests
-from enum import Enum 
+from enum import Enum
 from . import utils
 
 URLS: Dict[str, str] = utils.OPTIONS["urls"]
 PAPER_BASE_URL = URLS["papermc"].rstrip("/")
+
 
 class ServerProvider(Enum):
     """
@@ -63,7 +64,8 @@ class VanillaVersion(ServerVersion):
     def __init__(self, name: str, manifest: dict):
         super().__init__(name, ServerProvider.VANILLA)
         self._manifest = manifest
-        self.version_type: VanillaVersionType = VanillaVersionType(manifest["type"])
+        self.version_type: VanillaVersionType = VanillaVersionType(
+            manifest["type"])
 
     def _get_url(self) -> str:
         version_data = requests.get(self._manifest["url"]).json()
@@ -77,6 +79,7 @@ class PaperVersion(ServerVersion):
     def _get_url(self) -> str:
         version_data = requests.get(f"{PAPER_BASE_URL}/{self.name}").json()
         return f"{PAPER_BASE_URL}/{self.name}/{version_data['builds']['latest']}/download"
+
 
 def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False, old_versions: bool = False, all_versions: bool = False) -> List[ServerVersion]:
     """
@@ -140,6 +143,7 @@ def get_versions(provider: ServerProvider) -> List[ServerVersion]:
 
     elif provider == ServerProvider.SPIGOT:
         raise NotImplementedError("Spigot support is not implemented")
+
 
 def find_version(name: str, versions: List[ServerVersion]) -> Union[ServerVersion, None]:
     selected_version = None

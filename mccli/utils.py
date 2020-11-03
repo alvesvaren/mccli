@@ -7,6 +7,7 @@ with Path(__file__).parent.joinpath("options.json").open() as file:
     VERSION = OPTIONS["version"]
     SERVER_BASE_PATH = Path(OPTIONS["paths"]["server_base"])
 
+
 def confirm(msg: str, default: bool = False) -> bool:
     """
     Ask the user to confirm an action.

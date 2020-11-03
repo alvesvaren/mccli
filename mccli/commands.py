@@ -7,10 +7,13 @@ from pathlib import Path
 os.chdir(SERVER_BASE_PATH)
 
 # Should be ran as root
+
+
 def setup(*, verbose: bool = True):
     SERVER_BASE_PATH.mkdir(exist_ok=True)
     # Create minecraft account
     # Change ownership of SERVER_BASE_PATH to minecraft user and group
+
 
 def select_version(*, verbose: bool = True) -> mccli.ServerVersion:
     """
@@ -37,6 +40,7 @@ def select_version(*, verbose: bool = True) -> mccli.ServerVersion:
             print("Selected version", selected_version.name)
         return selected_version
     return None
+
 
 def create(name: str = None, *, verbose: bool = True):
     if not name:
