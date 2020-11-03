@@ -2,7 +2,7 @@ from typing import Dict, List, Union
 import json
 from pathlib import Path
 
-with open(Path(__file__).parent.joinpath("options.json").resolve()) as file:
+with Path(__file__).parent.joinpath("options.json").open() as file:
     OPTIONS: Dict[str, Union[dict, str, list]] = json.load(file)
     VERSION = OPTIONS["version"]
     SERVER_BASE_PATH = Path(OPTIONS["paths"]["server_base"])
