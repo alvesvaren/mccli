@@ -51,7 +51,7 @@ class BusType(Enum):
 
 
 class Unit:
-    def __init__(self, name: str, bus: BusType):
+    def __init__(self, name: str, bus: BusType = BusType.SYSTEM):
         if not name.endswith((
             ".service", ".target",
             ".socket", ".device", ".mount",
@@ -71,40 +71,55 @@ class Unit:
             self._systemd,
             'org.freedesktop.systemd1.Manager'
         )
+        self._unit_path = self._manager.GetUnit(self.name)
+        self._unit = self._bus.get_object(
+            "org.freedesktop.systemd1",
+            self._unit_path
+        )
+        self._unit_props = dbus.Interface(
+            self._unit, "org.freedesktop.DBus.Properties")
 
     def start(self) -> int:
         """
         Start a server, returns exit status if failed, else 0
         """
-        raise NotImplementedError
+        self._manager.StartUnit(self.name, "replace")
 
     def stop(self):
-        raise NotImplementedError
+        self._manager.StopUnit(self.name, "replace")
 
     def restart(self) -> int:
-        raise NotImplementedError
+        self._manager.RestartUnit(self.name, "replace")
 
     def enable(self, now: bool = False) -> Union[int, None]:
         """
         Retruns exit code from start if called with now
         """
-        raise NotImplementedError
+        self._manager.EnableUnitFiles([self.name], False, False)
+        if now:
+            self.start()
 
     def disable(self, now: bool = False):
-        raise NotImplementedError
+        self._manager.DisableUnitFiles([self.name], False)
+        if now:
+            self.stop()
 
     def reload(self):
-        raise NotImplementedError
+        self._manager.ReloadUnit(self.name, "replace")
 
     @property
     def status(self) -> SystemdStatusState:
         raise NotImplementedError
 
     @property
-    def enabled(self) -> SystemdEnablementState:
+    def enablement(self) -> SystemdEnablementState:
         return SystemdEnablementState(
             self._manager.GetUnitFileState(self.name)
         )
+
+    @property
+    def description(self) -> str:
+        return str(self._unit_props.Get("org.freedesktop.systemd1.Unit", "Description"))
 
 
 class Service(Unit):
