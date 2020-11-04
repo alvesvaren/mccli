@@ -1,10 +1,10 @@
-from .systemd import Unit
+from .systemd import Service
 from .online_utils import ServerVersion, ServerProvider
 from .utils import SERVER_BASE_PATH
 import pathlib
 
 
-class Server(Unit):
+class Server(Service):
     def __init__(self, name: str, version: ServerVersion):
         self.name = name
         self.version = version
