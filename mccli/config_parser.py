@@ -39,8 +39,7 @@ def loads(string: str) -> _loaddict:
 
 
 def dump(obj: _loaddict, fp: TextIO) -> None:
-
-    dumps(obj)
+    fp.write(dumps(obj))
 
 
 def dumps(obj: _loaddict) -> str:
