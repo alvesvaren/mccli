@@ -7,6 +7,7 @@ import pathlib
 
 class Server(Service):
     def __init__(self, name: str, version: ServerVersion = None):
+        super().__init__(OPTIONS["service_template_name"].format(name=name))
         self.name = name
         self._version = None
         if version:

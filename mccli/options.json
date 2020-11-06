@@ -9,5 +9,6 @@
         "server_dat": "server.dat",
         "server_jar": "server.jar"
     },
-    "version": "dev"
+    "version": "dev",
+    "service_template_name": "minecraft-server@{name}.service"
 }
