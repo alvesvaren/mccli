@@ -2,7 +2,7 @@
 from typing import Any, Callable, Dict, List, Text, TextIO, Union
 import json
 import re
-_loaddict = Dict[str, Union[str, int, float, bool]]
+LoadDict = Dict[str, Union[str, int, float, bool]]
 _types = {
     "true": True,
     "false": False,
@@ -18,17 +18,17 @@ def cast_if_possible(func: Callable, value: Any) -> Any:
     return value
 
 
-def load(file: TextIO) -> _loaddict:
+def load(file: TextIO) -> LoadDict:
     return loads(file.read())
 
 
-def loads(string: str) -> _loaddict:
-    output: _loaddict = {}
+def loads(string: str) -> LoadDict:
+    output: LoadDict = {}
     for line in string.splitlines():
         key, value = line.strip().split("=")
-        if re.match(r"\d+", value):
+        if re.match(r"^\d+$", value):
             value = cast_if_possible(int, value)
-        elif re.match(r"\d+\.\d+", value):
+        elif re.match(r"^\d+\.\d+$", value):
             value = cast_if_possible(float, value)
 
         if (value in _types.keys()):
@@ -38,11 +38,11 @@ def loads(string: str) -> _loaddict:
     return output
 
 
-def dump(obj: _loaddict, fp: TextIO) -> None:
+def dump(obj: LoadDict, fp: TextIO) -> None:
     fp.write(dumps(obj))
 
 
-def dumps(obj: _loaddict) -> str:
+def dumps(obj: LoadDict) -> str:
     output: str = ""
     for key, value in obj.items():
         try:

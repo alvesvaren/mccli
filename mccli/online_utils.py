@@ -152,3 +152,8 @@ def find_version(name: str, versions: List[ServerVersion]) -> Union[ServerVersio
             selected_version = version
             break
     return selected_version
+
+
+def get_version(name: str, provider: ServerProvider):
+    versions = get_versions(provider)
+    return find_version(name, versions)

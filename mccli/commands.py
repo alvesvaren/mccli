@@ -1,4 +1,6 @@
-from mccli.online_utils import find_version, get_versions
+from .server_utils import Server
+from . import config_parser
+from .online_utils import find_version, get_versions
 from .utils import choice, confirm, OPTIONS, custom_choice, SERVER_BASE_PATH
 import mccli
 import os
@@ -42,22 +44,21 @@ def select_version(*, verbose: bool = True) -> mccli.ServerVersion:
     return None
 
 
-def create(name: str = None, *, verbose: bool = True):
+def create(name: str = None, *, verbose: bool = True) -> Server:
     if not name:
         name = custom_choice("What should the server be called?")
 
     server_dir = SERVER_BASE_PATH.joinpath(name)
-    server_dir.mkdir()
     version = select_version()
     if not version:
         raise ValueError("Did not select a valid version")
-    with server_dir.joinpath("server.jar").open("wb") as file:
-        if verbose:
-            print(f"Downloading server.jar from {version.url}...", end="")
-        file.write(version.download())
-        print("DONE!")
-        if confirm("Do you accept the Minecraft EULA (read at https://www.minecraft.net/eula)?", True):
-            with server_dir.joinpath("eula.txt").open("w") as file:
-                file.write("eula=true\n")
-                if verbose:
-                    print("Accepted eula.")
+    server = Server(name, version)
+    if verbose:
+        print(f"Downloading server.jar from {version.url}...", end="")
+    print("DONE!")
+    if confirm("Do you accept the Minecraft EULA (read at https://www.minecraft.net/eula)?"):
+        with server_dir.joinpath("eula.txt").open("w") as file:
+            file.write("eula=true\n")
+            if verbose:
+                print("Accepted eula.")
+    return server
