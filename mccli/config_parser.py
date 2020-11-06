@@ -1,6 +1,5 @@
 
 from typing import Any, Callable, Dict, List, Text, TextIO, Union
-import json
 import re
 LoadDict = Dict[str, Union[str, int, float, bool]]
 _types = {
@@ -46,8 +45,10 @@ def dumps(obj: LoadDict) -> str:
     output: str = ""
     for key, value in obj.items():
         try:
-            value = list(_types.keys())[list(_types.values()).index(value)]
+            for _key, _value in _types.items():
+                if value == _value:
+                    value = _key
         except ValueError:
-            pass
+            continue
         output += f"{key}={value}\n"
     return output

@@ -40,10 +40,11 @@ class Server(Service):
 
     @version.setter
     def version(self, version: ServerVersion):
+        self._version = version
         self.path.mkdir(exist_ok=True)
         if not self.version or not (self.version.provider == version.provider and self.version.name == version.name):
             with self.path.joinpath(OPTIONS["paths"]["server_dat"]).open("w") as file:
-                dump(file, {"name": version.name, "provider": version.value})
+                dump({"name": version.name, "provider": version.provider.value}, file)
 
             with self.path.joinpath(OPTIONS["paths"]["server_jar"]).open("wb") as file:
                 file.write(version.download())
