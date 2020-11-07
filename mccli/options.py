@@ -1,4 +1,4 @@
-{
+OPTIONS = {
     "urls": {
         "papermc": "https://papermc.io/api/v1/paper",
         "vanilla": "https://launchermeta.mojang.com/mc/game/version_manifest.json",

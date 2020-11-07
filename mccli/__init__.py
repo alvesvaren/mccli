@@ -3,3 +3,7 @@ from .online_utils import (
     get_versions, PaperVersion, ServerProvider,
     ServerVersion, VanillaVersion, VanillaVersionType, find_version, get_version
 )
+
+from .server_utils import (
+    Server
+)

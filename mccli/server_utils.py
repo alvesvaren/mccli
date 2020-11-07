@@ -5,9 +5,9 @@ from .utils import OPTIONS, SERVER_BASE_PATH
 import pathlib
 
 
-class Server(Service):
+class Server:
     def __init__(self, name: str, version: ServerVersion = None):
-        super().__init__(OPTIONS["service_template_name"].format(name=name))
+        # super().__init__(OPTIONS["service_template_name"].format(name=name))
         self.name = name
         self._version = None
         if version:
@@ -30,22 +30,27 @@ class Server(Service):
     @property
     def version(self):
         if not self._version:
+            print("I should do something")
             try:
                 with self.path.joinpath(OPTIONS["paths"]["server_dat"]).open() as file:
                     data = load(file)
                     self._version = get_version(
                         data["name"], ServerProvider(data["provider"]))
             except FileNotFoundError:
+                
                 return None
         return self._version
 
     @version.setter
     def version(self, version: ServerVersion):
-        self._version = version
+        
         self.path.mkdir(exist_ok=True)
-        if not self.version or not (self.version.provider == version.provider and self.version.name == version.name):
+        if not self.version or not (self._version.provider == version.provider and self.version.name == version.name):
             with self.path.joinpath(OPTIONS["paths"]["server_dat"]).open("w") as file:
                 dump({"name": version.name, "provider": version.provider.value}, file)
 
             with self.path.joinpath(OPTIONS["paths"]["server_jar"]).open("wb") as file:
+                print("Hello from the download")
                 file.write(version.download())
+        
+        self._version = version
