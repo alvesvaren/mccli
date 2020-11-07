@@ -58,11 +58,12 @@ class CurseState:
             move_cursor(self.main, self.line)
             self.main.clrtoeol()
         elif char in (127, curses.KEY_BACKSPACE):
+            self.line = self.line[:self.cursor_index - 1] + \
+                self.line[self.cursor_index:]
             self.cursor_index -= 1
-            self.line = self.line[:-1]
             self.move_cursor()
             self.main.clrtoeol()
-        elif char in (330,):
+        elif char in (330, curses.KEY_DC):
             self.line = self.line[:self.cursor_index] + \
                 self.line[self.cursor_index + 1:]
         elif char in (258, curses.KEY_DOWN):
@@ -75,6 +76,26 @@ class CurseState:
         elif char in (261, curses.KEY_RIGHT):
             self.cursor_index += 1
             self.move_cursor()
+        elif char in (546,):  # CTRL + LEFT
+            proposed_index = self.line[::-1].find(
+                " ", len(self.line) - self.cursor_index + 1)
+            if proposed_index > 0:
+                self.cursor_index = len(self.line) - proposed_index
+            else:
+                self.cursor_index = 0
+            self.move_cursor()
+        elif char in (561,):  # CTRL + RIGHT
+            proposed_index = self.line.find(" ", self.cursor_index + 1)
+            if proposed_index > 0:
+                self.cursor_index = proposed_index + 1
+            else:
+                self.cursor_index = len(self.line)
+            self.move_cursor()
+        elif char in (360, curses.KEY_END):
+            self.move_cursor(len(self.line))
+        elif char in (262, curses.KEY_HOME):
+            self.move_cursor(0)
+
         else:
             if char < 0:
                 return
