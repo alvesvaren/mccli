@@ -22,7 +22,7 @@ class CurseState:
         self.prefix = prefix
         self.cursor_index = 0
         self.line = ""
-        self.history = []
+        self.history = [""]
         self.rows, self.cols = scr.getmaxyx()
         self.history_index = len(self.history)
         self.main.keypad(True)
@@ -51,10 +51,11 @@ class CurseState:
 
         char = self.main.getch()
         if char in (10, curses.KEY_ENTER):
-            self.history.append(self.line)
+            self.history_index += 1
             self.sub.addstr(self.line)
             self.sub.refresh()
             self.line = ""
+            self.history.append(self.line)
             move_cursor(self.main, self.line)
             self.main.clrtoeol()
         elif char in (127, curses.KEY_BACKSPACE):
@@ -67,9 +68,15 @@ class CurseState:
             self.line = self.line[:self.cursor_index] + \
                 self.line[self.cursor_index + 1:]
         elif char in (258, curses.KEY_DOWN):
-            pass
+            if self.history_index < len(self.history) - 1:
+                self.history_index += 1
+                self.line = self.history[self.history_index]
+            if self.history == len(self.history) - 1:
+                self.line = ""
         elif char in (259, curses.KEY_UP):
-            pass
+            if self.history_index > 0:
+                self.history_index -= 1
+                self.line = self.history[self.history_index]
         elif char in (260, curses.KEY_LEFT):
             self.cursor_index -= 1
             self.move_cursor()
