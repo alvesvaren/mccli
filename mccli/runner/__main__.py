@@ -1,4 +1,5 @@
 import queue
+from subprocess import Popen
 import mccli
 import subprocess
 import sys
@@ -10,45 +11,45 @@ import tty
 import termios
 import select
 
-def enqueue_output(out, queue):
-    for line in iter(out.readline, b''):
-        queue.put(line)
-    out.close()
 
+# def enqueue_output(out, queue):
+#     for line in iter(out.readline, b''):
+#         queue.put(line)
+#     out.close()
+
+def handler(process: Popen):
+    while process.poll() is None:
+        
+        cmd = input("> ").encode("utf-8")
+        print(cmd)
+        process.stdin.write(cmd + b"\n")
+        process.stdin.flush()
+
+def subprocess_open():
+    process = subprocess.Popen(["java", "-jar", "server.jar",
+                                "nogui"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    # process.communicate()
+    thread = Thread(target=handler, args=[process], daemon=True)
+    thread.start()
+    try:
+        while process.poll() is None:
+            # process.communicate(timeout=0.5)
+            line = process.stdout.readline()
+            if line:
+                print(line.decode("utf-8"), end="")
+    except KeyboardInterrupt:
+        process.kill()
+
+def system_open():
+    return os.system("java -jar server.jar nogui")
 
 if __name__ == "__main__":
     server = mccli.Server(sys.argv[1])
     os.chdir(server.path)
-    process = subprocess.Popen(["java", "-jar", "server.jar",
-                                "nogui"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-    try:
-        # tty.setcbreak(sys.stdin.fileno())
-        cmd = ""
-        open("logs/latest.log", "w").close()
-        # open("to_run", "w").close()
-        with open("logs/latest.log") as file:
-            # with open("to_run", "r") as in_file:
-            while process.poll() is None:
-                # process.stdin.write(line)
-                data = file.readline()
-                # cmd = in_file.readline()
-                # if cmd:
-                #     print(cmd)
-                    
-                #     open("to_run", "wb").close()
-                if data:
-                    print(data, end="")
-                
-                # new_cmd = sys.stdin.read(1)
-                # if new_cmd:
-                #     # print(cmd)
-                #     cmd+=new_cmd
-                #     if cmd.endswith("\n"):
-                #         process.stdin.write(cmd.encode("utf-8"))
-                #         cmd = ""
-                
-    finally:
-        process.kill()
+    if len(sys.argv) > 2:
+        if sys.argv[2] == "system":
+            exit(system_open())
+    subprocess_open()
     
+        
 
-    process.communicate()
