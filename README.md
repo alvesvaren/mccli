@@ -9,7 +9,7 @@ sudo useradd minecraft
 sudo mkdir /opt/mccli && sudo chown minecraft:minecraft /opt/mccli
 sudo -u minecraft git clone https://github.com/alvesvaren/mccli.git /opt/mccli
 cd /opt/mccli
-sudo ./install.sh
+source ./install.sh
 ```
 
 ## Update
