@@ -5,13 +5,9 @@ SUCCESS_STR="\e[32m\e[1mSuccess:\e[0m"
 WARN_STR="\e[33m\e[1mWarn:\e[0m"
 INFO_STR="\e[34m\e[1mInfo:\e[0m"
 DIM_QUOTE="\e[2m'\e[22m"
-confirm() {
-    read -p "$1 [Y/n] " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        return true
-    fi
-    return false
+
+options() {
+    JQ_OUT=python -
 }
 
 sudo -v
@@ -58,10 +54,10 @@ echo
 echo -e "$INFO_STR Adding alias file to profile.d"
 sudo cp ./profile.sh /etc/profile.d/10-mccli.sh
 echo -e "$INFO_STR Sourcing alias file in current shell"
+source /etc/profile.d/10-mccli.sh
 echo
 
 echo -e "$WARN_STR If you have any other shells open, you need to restart it or source the alias file to use the ${DIM_QUOTE}mccli$DIM_QUOTE command"
-source /etc/profile.d/10-mccli.sh
 echo -e "$WARN_STR Make sure to add yourself to the ${DIM_QUOTE}minecraft$DIM_QUOTE group to be able to use mccli without entering sudo password"
 echo
 echo -e "$INFO_STR Most likely you are able to add yourself to the minecraft group by typing: ${DIM_QUOTE}sudo usermod -aG minecraft $USER$DIM_QUOTE"
