@@ -51,13 +51,10 @@ echo -e "$INFO_STR Linking service template with systemd"
 sudo systemctl reenable $PWD/minecraft-server@.service
 echo
 
-echo -e "$INFO_STR Adding alias file to profile.d"
-sudo cp ./profile.sh /etc/profile.d/10-mccli.sh
-echo -e "$INFO_STR Sourcing alias file in current shell"
-source /etc/profile.d/10-mccli.sh
+echo -e "$INFO_STR Creating symlink to mccli.sh in /usr/bin/"
+sudo ln -sf $PWD/mccli.sh /usr/bin/mccli
 echo
 
-echo -e "$WARN_STR If you have any other shells open, you need to restart it or source the alias file to use the ${DIM_QUOTE}mccli$DIM_QUOTE command"
 echo -e "$WARN_STR Make sure to add yourself to the ${DIM_QUOTE}minecraft$DIM_QUOTE group to be able to use mccli without entering sudo password"
 echo
 echo -e "$INFO_STR Most likely you are able to add yourself to the minecraft group by typing: ${DIM_QUOTE}sudo usermod -aG minecraft $USER$DIM_QUOTE"
