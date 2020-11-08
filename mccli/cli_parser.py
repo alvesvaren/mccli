@@ -2,7 +2,7 @@ import argparse
 from argparse import Namespace
 from mccli.server_utils import Server
 from mccli.online_utils import ServerProvider
-from .commands import (create, modify, update)
+from .commands import (create, modify, update, run)
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
@@ -12,7 +12,8 @@ parser.add_argument("--verbose", "-v", action="store_true")
 commands = {
     "modify": subparsers.add_parser("modify"),
     "update": subparsers.add_parser("update"),
-    "status": subparsers.add_parser("status")
+    "status": subparsers.add_parser("status"),
+    "run": subparsers.add_parser("run")
 }
 
 commands_not_requires_server = {
@@ -47,11 +48,14 @@ def update_wrapper(args: Namespace):
 def status_wrapper(args: Namespace):
     pass
 
+def run_wrapper(args: Namespace):
+    run(name=args.server, verbose=args.verbose)
 
 commands["create"].set_defaults(runner=create_wrapper)
 commands["modify"].set_defaults(runner=modify_wrapper)
 commands["update"].set_defaults(runner=update_wrapper)
 commands["status"].set_defaults(runner=status_wrapper)
+commands["run"].set_defaults(runner=run_wrapper)
 parser.set_defaults(runner=status_wrapper)
 
 
@@ -60,6 +64,3 @@ def run_parser(*args, **kwargs):
     if result.verbose:
         print(result)
     result.runner(result)
-
-# parser.add_argument("action", type=str, default="status",
-#                     choices=commands.keys())

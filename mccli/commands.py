@@ -83,3 +83,6 @@ def modify(name: str, key: str, value: Union[str, int, float, bool], file_name: 
         with absolute_path.open("w") as file:
             dump(old_data, file)
         raise error
+
+def run(name: str, *, verbose: bool = VERBOSE):
+    exit(os.system(f"python -m mccli.runner {name}"))
