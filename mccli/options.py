@@ -13,7 +13,7 @@ OPTIONS = {
     },
     "version": "dev",
     "service_template_name": "minecraft-server@{name}.service",
-    "verbose_output": True
+    "verbose_output": False
 }
 
 def get(arg: str):

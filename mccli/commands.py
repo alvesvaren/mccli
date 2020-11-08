@@ -2,7 +2,7 @@ from .config_parser import dump, load
 from typing import Union
 from .server_utils import Server
 from . import config_parser
-from .online_utils import ServerVersion, find_version, get_versions
+from .online_utils import ServerProvider, ServerVersion, find_version, get_versions
 from .utils import choice, confirm, OPTIONS, custom_choice, SERVER_BASE_PATH
 import mccli
 import os
@@ -11,14 +11,14 @@ from pathlib import Path
 os.chdir(SERVER_BASE_PATH)
 VERBOSE: bool = OPTIONS["verbose_output"]
 
-def select_version(*, verbose: bool = VERBOSE) -> mccli.ServerVersion:
+def select_version(provider: ServerProvider = None, *, verbose: bool = VERBOSE) -> mccli.ServerVersion:
     """
     Allow the user to select version
     """
-
-    providers = ["vanilla", "papermc"]
-    provider = mccli.ServerProvider(
-        providers[choice("Select provider", providers)])
+    if not provider:
+        providers = ["vanilla", "papermc"]
+        provider = mccli.ServerProvider(
+            providers[choice("Select provider", providers)])
     if verbose:
         print("\nSelected", provider.value, "provider.")
         print("Fetching versions from provider...", end="")
@@ -38,11 +38,11 @@ def select_version(*, verbose: bool = VERBOSE) -> mccli.ServerVersion:
     raise ValueError("Did not select a valid version")
 
 
-def create(name: str = None, *, verbose: bool = VERBOSE) -> Server:
+def create(name: str = None, provider: ServerProvider = None, *, verbose: bool = VERBOSE) -> Server:
     if not name:
         name = custom_choice("What should the server be called?")
 
-    version = select_version()
+    version = select_version(provider)
     if verbose:
         print(f"Downloading server.jar from {version.url}...", end="")
     server = Server(name, version)
