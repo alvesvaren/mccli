@@ -24,6 +24,9 @@ def load(file: TextIO) -> LoadDict:
 def loads(string: str) -> LoadDict:
     output: LoadDict = {}
     for line in string.splitlines():
+        if line.startswith("#"):
+            # TODO: Add support for comments
+            continue
         key, value = line.strip().split("=")
         if re.match(r"^\d+$", value):
             value = cast_if_possible(int, value)

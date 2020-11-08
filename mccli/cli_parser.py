@@ -37,7 +37,11 @@ commands.update(commands_no_server)
 # Create command
 commands["create"].add_argument(
     "--provider", "-p", required=False, choices=[i.value for i in ServerProvider])
-commands["create"].add_argument
+
+commands["modify"].add_argument("key")
+commands["modify"].add_argument("value")
+commands["modify"].add_argument("--file", required=False, default="server.properties")
+
 
 def create_wrapper(args: Namespace):
     create(name=args.server, provider=ServerProvider(
@@ -45,22 +49,27 @@ def create_wrapper(args: Namespace):
 
 
 def modify_wrapper(args: Namespace):
-    pass
+    modify(
+        name=args.server, key=args.key, value=args.value,
+        file_name=args.file, verbose=args.verbose)
 
 
 def update_wrapper(args: Namespace):
-    pass
+    update(name=args.server, verbose=args.verbose)
 
 
 def status_wrapper(args: Namespace):
     pass
 
+
 def run_wrapper(args: Namespace):
     run(name=args.server, verbose=args.verbose)
+
 
 def upgrade(args: Namespace):
     os.chdir(Path(mccli.__file__).parent.resolve())
     exit(os.system("git pull --ff-only"))
+
 
 commands["create"].set_defaults(runner=create_wrapper)
 commands["modify"].set_defaults(runner=modify_wrapper)
