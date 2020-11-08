@@ -17,7 +17,7 @@ OPTIONS = {
 }
 
 def get(arg: str):
-    values = "".join([f'["{i}"]' for i in argv[1].split('.')])
+    values = "".join([f'["{i}"]' for i in arg.split('.')])
     try:
         print(eval(f"OPTIONS{values}"))
     except Exception:
