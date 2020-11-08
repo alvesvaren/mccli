@@ -8,7 +8,7 @@ from pathlib import Path
 
 os.chdir(SERVER_BASE_PATH)
 
-def select_version(*, verbose: bool = True) -> mccli.ServerVersion:
+def select_version(*, verbose: bool = OPTIONS["verbose_output"]) -> mccli.ServerVersion:
     """
     Allow the user to select version
     """
@@ -35,7 +35,7 @@ def select_version(*, verbose: bool = True) -> mccli.ServerVersion:
     return None
 
 
-def create(name: str = None, *, verbose: bool = True) -> Server:
+def create(name: str = None, *, verbose: bool = OPTIONS["verbose_output"]) -> Server:
     if not name:
         name = custom_choice("What should the server be called?")
 

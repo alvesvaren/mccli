@@ -10,5 +10,6 @@ OPTIONS = {
         "server_jar": "server.jar"
     },
     "version": "dev",
-    "service_template_name": "minecraft-server@{name}.service"
+    "service_template_name": "minecraft-server@{name}.service",
+    "verbose_output": True
 }
