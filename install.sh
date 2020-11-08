@@ -8,8 +8,7 @@ DIM_QUOTE="\e[2m'\e[22m"
 confirm() {
     read -p "$1 [Y/n] " -n 1 -r
     echo
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
         return true
     fi
     return false
@@ -20,9 +19,8 @@ echo -e "\e[1mInstallation script for MCCLI"
 echo
 
 echo -e "$INFO_STR Checking of minecraft user exists"
-getent passwd minecraft > /dev/null
-if [ $? -ne 0 ]
-then
+getent passwd minecraft >/dev/null
+if [ $? -ne 0 ]; then
     echo -e "$ERROR_STR You need to add a user called 'minecraft'"
     exit 1
 fi
@@ -37,8 +35,7 @@ echo
 
 echo -e "$INFO_STR Checking validity of sudoers file..."
 visudo -scf ./sudoers.conf
-if [ $? -ne 0 ]
-then
+if [ $? -ne 0 ]; then
     echo -e "$ERROR_STR ./sudoers.conf is invalid!"
     echo -e "$WARN_STR Aborting. Check output"
     exit 1
