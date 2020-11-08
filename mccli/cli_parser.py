@@ -41,7 +41,7 @@ commands["create"].add_argument
 
 def create_wrapper(args: Namespace):
     create(name=args.server, provider=ServerProvider(
-        args.provider), verbose=args.verbose)
+        args.provider) if args.provider else None, verbose=args.verbose)
 
 
 def modify_wrapper(args: Namespace):
