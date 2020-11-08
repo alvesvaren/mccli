@@ -1,3 +1,5 @@
+from sys import argv
+
 OPTIONS = {
     "urls": {
         "papermc": "https://papermc.io/api/v1/paper",
@@ -13,3 +15,11 @@ OPTIONS = {
     "service_template_name": "minecraft-server@{name}.service",
     "verbose_output": True
 }
+
+if __name__ == "__main__":
+    # ab.awd.d.van => ["ab", "awd", "d", "van"] => "['ab']['awd']['d']['van']"
+    values = "".join([f'["{i}"]' for i in argv[1].split('.')])
+    try:
+        print(eval(f"OPTIONS{values}"))
+    except Exception:
+        exit(1)
