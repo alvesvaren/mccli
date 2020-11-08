@@ -16,10 +16,12 @@ OPTIONS = {
     "verbose_output": True
 }
 
-if __name__ == "__main__":
-    # ab.awd.d.van => ["ab", "awd", "d", "van"] => "['ab']['awd']['d']['van']"
+def get(arg: str):
     values = "".join([f'["{i}"]' for i in argv[1].split('.')])
     try:
         print(eval(f"OPTIONS{values}"))
     except Exception:
         exit(1)
+
+if __name__ == "__main__":
+    get(argv[1])
