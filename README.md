@@ -1,4 +1,4 @@
-# mccli
+# mccli (really WIP)
 
 This is a collection of some python modules/scripts that makes it easier for you to manager minecraft servers on linux (and probably other) OSes.
 
