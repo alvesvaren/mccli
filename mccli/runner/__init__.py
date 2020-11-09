@@ -35,7 +35,9 @@ def system_open():
 
 def tmux_fork(name: str) -> int:
     print("Creating new mccli run session")
-    exit(os.system(f'/usr/bin/tmux new-session -s mc-{name} "mccli run {name}"'))
+    exit1 = os.system(f'/usr/bin/tmux new-session -ds mc-{name} "mccli run {name}"')
+    exit2 = os.system(f'/usr/bin/tmux wait-for mc-{name}-done')
+    exit(exit1 if exit1 != 0 else exit2)
     # print("Waiting for server to exit")
     # if exit_code == 0:
     #     try:
