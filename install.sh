@@ -61,6 +61,8 @@ fi
 
 echo -e "$INFO_STR Linking service template with systemd"
 sudo systemctl enable $PWD/minecraft-server@.service
+echo -e "$INFO_STR Reloading daemons"
+sudo systemctl daemon-reload
 echo
 
 
