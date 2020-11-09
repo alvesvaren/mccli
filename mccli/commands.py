@@ -95,3 +95,7 @@ def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
         command = " ".join(command)
     print(f"Running '{command}' in mc-{name}")
     exit(os.system(f"/usr/bin/tmux send-keys -t mc-{name} '{command}' ENTER"))
+
+def attach(name: str, *, verbose: bool = VERBOSE):
+    print(f"Attach to console of server named {name}")
+    exit(os.system(f"/usr/bin/tmux attach -t mc-{name}"))

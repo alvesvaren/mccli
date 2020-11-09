@@ -6,7 +6,7 @@ import mccli
 from pathlib import Path
 from .server_utils import Server, get_server_service
 from .online_utils import ServerProvider
-from .commands import (create, modify, run, update, runner)
+from .commands import (attach, create, modify, run, update, runner)
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
@@ -23,8 +23,8 @@ commands = {
     "disable": subparsers.add_parser("disable"),
     "enable": subparsers.add_parser("enable"),
     "restart": subparsers.add_parser("restart"),
-    "console": subparsers.add_parser("console"),
-    "run": subparsers.add_parser("run")
+    "attach": subparsers.add_parser("attach", aliases=["console", "a"]),
+    "run": subparsers.add_parser("run", aliases=["exec", "execute", "command"])
 }
 
 commands_optional_server = {
@@ -82,6 +82,9 @@ def runner_wrapper(args: Namespace):
 def run_wrapper(args: Namespace):
     run(name=args.server, command=args.command, verbose=args.verbose)
 
+def attach_wrapper(args: Namespace):
+    attach(name=args.server, verbose=args.verbose)
+
 def upgrade(args: Namespace):
     os.chdir(Path(mccli.__file__).parent.resolve())
     exit(os.system("git pull --ff-only"))
@@ -105,6 +108,7 @@ def restart(args: Namespace):
 commands["create"].set_defaults(runner=create_wrapper)
 commands["modify"].set_defaults(runner=modify_wrapper)
 commands["update"].set_defaults(runner=update_wrapper)
+commands["attach"].set_defaults(runner=attach_wrapper)
 commands["status"].set_defaults(runner=status_wrapper)
 commands["runner"].set_defaults(runner=runner_wrapper)
 commands["upgrade"].set_defaults(runner=upgrade)
