@@ -1,5 +1,5 @@
 from .config_parser import dump, load
-from .systemd import Service
+from .systemd import BusType, Service
 from .online_utils import ServerVersion, ServerProvider, get_version
 from .utils import OPTIONS, SERVER_BASE_PATH
 import pathlib
@@ -52,3 +52,6 @@ class Server:
                 file.write(version.download())
         
         self._version = version
+
+def get_server_service(name: str):
+    return Service(f"minecraft-server@{name}.service", BusType.SYSTEM)

@@ -3,8 +3,8 @@ from argparse import Namespace
 import os
 import mccli
 from pathlib import Path
-from mccli.server_utils import Server
-from mccli.online_utils import ServerProvider
+from .server_utils import Server, get_server_service
+from .online_utils import ServerProvider
 from .commands import (create, modify, update, run)
 
 parser = argparse.ArgumentParser()
@@ -16,7 +16,12 @@ commands = {
     "modify": subparsers.add_parser("modify"),
     "update": subparsers.add_parser("update"),
     "status": subparsers.add_parser("status"),
-    "run": subparsers.add_parser("run")
+    "run": subparsers.add_parser("run"),
+    "start": subparsers.add_parser("start"),
+    "stop": subparsers.add_parser("stop"),
+    "disable": subparsers.add_parser("disable"),
+    "enable": subparsers.add_parser("enable"),
+    "restart": subparsers.add_parser("restart"),
 }
 
 commands_optional_server = {
@@ -42,6 +47,8 @@ commands["modify"].add_argument("key")
 commands["modify"].add_argument("value")
 commands["modify"].add_argument("--file", required=False, default="server.properties")
 
+commands["enable"].add_argument("--now", required=False, action="store_true")
+commands["disable"].add_argument("--now", required=False, action="store_true")
 
 def create_wrapper(args: Namespace):
     create(name=args.server, provider=ServerProvider(
@@ -71,12 +78,32 @@ def upgrade(args: Namespace):
     exit(os.system("git pull --ff-only"))
 
 
+def enable(args: Namespace):
+    get_server_service(args.server).enable(args.now)
+
+def start(args: Namespace):
+    get_server_service(args.server).start()
+
+def disable(args: Namespace):
+    get_server_service(args.server).disable(args.now)
+
+def stop(args: Namespace):
+    get_server_service(args.server).stop()
+
+def restart(args: Namespace):
+    get_server_service(args.server).restart()
+
 commands["create"].set_defaults(runner=create_wrapper)
 commands["modify"].set_defaults(runner=modify_wrapper)
 commands["update"].set_defaults(runner=update_wrapper)
 commands["status"].set_defaults(runner=status_wrapper)
 commands["run"].set_defaults(runner=run_wrapper)
 commands["upgrade"].set_defaults(runner=upgrade)
+commands["enable"].set_defaults(runner=enable)
+commands["start"].set_defaults(runner=start)
+commands["disable"].set_defaults(runner=upgrade)
+commands["stop"].set_defaults(runner=stop)
+commands["restart"].set_defaults(runner=restart)
 parser.set_defaults(runner=status_wrapper)
 
 
