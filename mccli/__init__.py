@@ -5,5 +5,5 @@ from .online_utils import (
 )
 
 from .server_utils import (
-    Server
+    Server, get_server_service
 )

@@ -1,5 +1,6 @@
 import argparse
 from argparse import Namespace
+from .utils import VERSION
 import os
 import re
 import mccli
@@ -73,7 +74,7 @@ def update_wrapper(args: Namespace):
 
 
 def status_wrapper(args: Namespace):
-    pass
+    print("MCCLI Version", VERSION)
 
 
 def runner_wrapper(args: Namespace):
@@ -123,6 +124,6 @@ parser.set_defaults(runner=status_wrapper)
 
 def run_parser(*args, **kwargs):
     result = parser.parse_args(*args, **kwargs)
-    if result.verbose:
-        print(result)
+    # if result.verbose:
+    #     print(result)
     result.runner(result)
