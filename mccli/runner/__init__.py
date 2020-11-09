@@ -35,14 +35,14 @@ def system_open():
 
 def tmux_fork(name: str) -> int:
     print("Creating new mccli run session")
-    exit_code = os.system(f'/usr/bin/tmux new-session -ds mc-{name} "mccli run {name}"')
-    print("Waiting for server to exit")
-    if exit_code == 0:
-        try:
-            while os.system(f"/usr/bin/tmux has-session -t mc-{name}") == 0:
-                time.sleep(1)
-            return 1
-        except KeyboardInterrupt:
-            print("Killing server as process was terminated")
-            return os.system(f"/usr/bin/tmux kill-session -t mc-{name}")
-    return exit_code
+    exit(os.system(f'/usr/bin/tmux new-session -s mc-{name} "mccli run {name}"'))
+    # print("Waiting for server to exit")
+    # if exit_code == 0:
+    #     try:
+    #         while os.system(f"/usr/bin/tmux has-session -t mc-{name}") == 0:
+    #             time.sleep(1)
+    #         return 1
+    #     except KeyboardInterrupt:
+    #         print("Killing server as process was terminated")
+    #         return os.system(f"/usr/bin/tmux kill-session -t mc-{name}")
+    # return exit_code
