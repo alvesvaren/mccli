@@ -34,6 +34,7 @@ def system_open():
     return os.system("java -jar server.jar nogui")
 
 def tmux_fork(name: str) -> int:
+    os.fork()
     print("Creating new mccli run session")
     exit_code = os.system(f'/usr/bin/tmux new-session -ds mc-{name} "mccli run {name}"')
     print("Waiting for server to exit")
