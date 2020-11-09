@@ -17,6 +17,7 @@ sudo ./install.sh
 ```bash
 cd /opt/mccli
 sudo -u minecraft git pull
+./install.sh
 ```
 
 ## Basic usage
