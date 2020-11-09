@@ -51,7 +51,7 @@ commands["modify"].add_argument("--file", required=False, default="server.proper
 commands["enable"].add_argument("--now", required=False, action="store_true")
 commands["disable"].add_argument("--now", required=False, action="store_true")
 
-commands["run"].add_argument("--fork", required=False, action="store_true")
+commands["run"].add_argument("--keep-alive", required=False, action="store_true", help="Keep the process alive while the tmux session exists")
 
 def create_wrapper(args: Namespace):
     create(name=args.server, provider=ServerProvider(

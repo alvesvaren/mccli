@@ -11,6 +11,6 @@ if __name__ == "__main__":
         if sys.argv[2] == "subproc":
             subprocess_open()
             exit()
-        elif sys.argv[2] == "fork":
+        elif sys.argv[2] == "tmux-keep-alive":
             exit(tmux_fork(server.name))
     exit(system_open())

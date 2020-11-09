@@ -87,5 +87,5 @@ def modify(name: str, key: str, value: Union[str, int, float, bool], file_name: 
 def run(name: str, fork: bool = False, *, verbose: bool = VERBOSE):
     cmd = f"python -m mccli.runner {name}"
     if fork:
-        cmd += " fork"
+        cmd += " tmux-keep-alive"
     exit(os.system(cmd))
