@@ -1,6 +1,7 @@
 import argparse
 from argparse import Namespace
 import os
+import re
 import mccli
 from pathlib import Path
 from .server_utils import Server, get_server_service
@@ -50,6 +51,8 @@ commands["modify"].add_argument("--file", required=False, default="server.proper
 commands["enable"].add_argument("--now", required=False, action="store_true")
 commands["disable"].add_argument("--now", required=False, action="store_true")
 
+commands["run"].add_argument("--fork", required=False, action="store_true")
+
 def create_wrapper(args: Namespace):
     create(name=args.server, provider=ServerProvider(
         args.provider) if args.provider else None, verbose=args.verbose)
@@ -70,7 +73,7 @@ def status_wrapper(args: Namespace):
 
 
 def run_wrapper(args: Namespace):
-    run(name=args.server, verbose=args.verbose)
+    run(name=args.server, fork=args.fork, verbose=args.verbose)
 
 
 def upgrade(args: Namespace):

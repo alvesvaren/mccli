@@ -1,7 +1,7 @@
 import mccli
 import sys
 import os
-from . import subprocess_open, system_open
+from . import subprocess_open, system_open, tmux_fork
 
 
 if __name__ == "__main__":
@@ -11,4 +11,6 @@ if __name__ == "__main__":
         if sys.argv[2] == "subproc":
             subprocess_open()
             exit()
+        elif sys.argv[2] == "fork":
+            exit(tmux_fork(server.name))
     exit(system_open())

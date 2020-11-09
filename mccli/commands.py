@@ -84,5 +84,8 @@ def modify(name: str, key: str, value: Union[str, int, float, bool], file_name: 
             dump(old_data, file)
         raise error
 
-def run(name: str, *, verbose: bool = VERBOSE):
-    exit(os.system(f"python -m mccli.runner {name}"))
+def run(name: str, fork: bool = False, *, verbose: bool = VERBOSE):
+    cmd = f"python -m mccli.runner {name}"
+    if fork:
+        cmd += " fork"
+    exit(os.system(cmd))
