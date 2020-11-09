@@ -1,5 +1,5 @@
 from .config_parser import dump, load
-from typing import Union
+from typing import List, Union
 from .server_utils import Server
 from . import config_parser
 from .online_utils import ServerProvider, ServerVersion, find_version, get_versions
@@ -84,8 +84,14 @@ def modify(name: str, key: str, value: Union[str, int, float, bool], file_name: 
             dump(old_data, file)
         raise error
 
-def run(name: str, fork: bool = False, *, verbose: bool = VERBOSE):
+def runner(name: str, fork: bool = False, *, verbose: bool = VERBOSE):
     cmd = f"python -m mccli.runner {name}"
     if fork:
         cmd += " tmux-keep-alive"
     exit(os.system(cmd))
+
+def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
+    if type(command) != str:
+        command = " ".join(command)
+    print(f"Running '{command}' in mc-{name}")
+    exit(os.system(f"/usr/bin/tmux send-keys -t mc-{name} '{command}' ENTER"))

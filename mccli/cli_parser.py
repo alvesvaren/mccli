@@ -6,7 +6,7 @@ import mccli
 from pathlib import Path
 from .server_utils import Server, get_server_service
 from .online_utils import ServerProvider
-from .commands import (create, modify, update, run)
+from .commands import (create, modify, run, update, runner)
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
@@ -17,12 +17,14 @@ commands = {
     "modify": subparsers.add_parser("modify"),
     "update": subparsers.add_parser("update"),
     "status": subparsers.add_parser("status"),
-    "run": subparsers.add_parser("run"),
+    "runner": subparsers.add_parser("runner"),
     "start": subparsers.add_parser("start"),
     "stop": subparsers.add_parser("stop"),
     "disable": subparsers.add_parser("disable"),
     "enable": subparsers.add_parser("enable"),
     "restart": subparsers.add_parser("restart"),
+    "console": subparsers.add_parser("console"),
+    "run": subparsers.add_parser("run")
 }
 
 commands_optional_server = {
@@ -51,7 +53,9 @@ commands["modify"].add_argument("--file", required=False, default="server.proper
 commands["enable"].add_argument("--now", required=False, action="store_true")
 commands["disable"].add_argument("--now", required=False, action="store_true")
 
-commands["run"].add_argument("--keep-alive", required=False, action="store_true", help="Keep the process alive while the tmux session exists", dest="keepalive")
+commands["runner"].add_argument("--keep-alive", required=False, action="store_true", help="Keep the process alive while the tmux session exists", dest="keepalive")
+
+commands["run"].add_argument("command", nargs="+")
 
 def create_wrapper(args: Namespace):
     create(name=args.server, provider=ServerProvider(
@@ -72,9 +76,11 @@ def status_wrapper(args: Namespace):
     pass
 
 
-def run_wrapper(args: Namespace):
-    run(name=args.server, fork=args.keepalive, verbose=args.verbose)
+def runner_wrapper(args: Namespace):
+    runner(name=args.server, fork=args.keepalive, verbose=args.verbose)
 
+def run_wrapper(args: Namespace):
+    run(name=args.server, command=args.command, verbose=args.verbose)
 
 def upgrade(args: Namespace):
     os.chdir(Path(mccli.__file__).parent.resolve())
@@ -100,13 +106,14 @@ commands["create"].set_defaults(runner=create_wrapper)
 commands["modify"].set_defaults(runner=modify_wrapper)
 commands["update"].set_defaults(runner=update_wrapper)
 commands["status"].set_defaults(runner=status_wrapper)
-commands["run"].set_defaults(runner=run_wrapper)
+commands["runner"].set_defaults(runner=runner_wrapper)
 commands["upgrade"].set_defaults(runner=upgrade)
 commands["enable"].set_defaults(runner=enable)
 commands["start"].set_defaults(runner=start)
 commands["disable"].set_defaults(runner=upgrade)
 commands["stop"].set_defaults(runner=stop)
 commands["restart"].set_defaults(runner=restart)
+commands["run"].set_defaults(runner=run_wrapper)
 parser.set_defaults(runner=status_wrapper)
 
 
