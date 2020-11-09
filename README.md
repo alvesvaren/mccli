@@ -23,7 +23,7 @@ sudo -u minecraft git pull
 
 ```bash
 mccli create servername
-mccli enable --now servername
+mccli enable --now servername # doesn't really work right now, but this is how it's meant to be used, replace with 'sudo systemctl enabe --now minecraft-server@servername.service'
 mccli console servername
 ```
 
