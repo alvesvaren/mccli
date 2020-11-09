@@ -6,9 +6,15 @@ WARN_STR="\e[33m\e[1mWarn:\e[0m"
 INFO_STR="\e[34m\e[1mInfo:\e[0m"
 DIM_QUOTE="\e[2m'\e[22m"
 
+DEV=${DEV:-false}
+
 options() {
     JQ_OUT=python -
 }
+
+if [ $DEV = true ]; then
+    echo -e "$WARN_STR This script will run in development mode"
+fi
 
 sudo -v
 echo -e "\e[1mInstallation script for MCCLI"
@@ -40,19 +46,26 @@ echo -e "$SUCCESS_STR Validity check passed!"
 echo
 
 echo -e "$INFO_STR Adding sudoers file to sudoers.d"
-sudo cp ./sudoers.conf /etc/sudoers.d/10-mccli.conf
+sudo cp ./sudoers.conf /etc/sudoers.d/10-mccli
 echo
 
-echo -e "$INFO_STR Installing mccli with pip (editable mode)"
-sudo pip3 install -e .
-echo
+if [ $DEV == false ]; then
+    echo -e "$INFO_STR Installing mccli with pip"
+    sudo pip3 install .
+    echo
+fi
 
 echo -e "$INFO_STR Linking service template with systemd"
 sudo systemctl reenable $PWD/minecraft-server@.service
 echo
 
-echo -e "$INFO_STR Creating symlink to mccli.sh in /usr/bin/"
-sudo ln -sf $PWD/mccli.sh /usr/bin/mccli
+
+if [ $DEV == false ]; then
+    echo -e "$INFO_STR Creating symlink to mccli.sh in /usr/bin/"
+    sudo ln -sf $PWD/mccli.sh /usr/bin/mccli
+else
+    echo -e "$WARN_STR Because this was run in developer mode, a symlink to the binary was not created"
+fi
 echo
 
 echo -e "$WARN_STR Make sure to add yourself to the ${DIM_QUOTE}minecraft$DIM_QUOTE group to be able to use mccli without entering sudo password"
