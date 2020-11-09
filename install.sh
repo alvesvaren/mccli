@@ -56,7 +56,7 @@ if [ $DEV == false ]; then
 fi
 
 echo -e "$INFO_STR Linking service template with systemd"
-sudo systemctl reenable $PWD/minecraft-server@.service
+sudo systemctl enable $PWD/minecraft-server@.service
 echo
 
 
