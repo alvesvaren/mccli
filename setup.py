@@ -1,11 +1,12 @@
 import setuptools
+from mccli.options import OPTIONS
 
 with open("README.md") as file:
     long_description = file.read()
 
 setuptools.setup(
     name="mccli",
-    version="0.0.1",
+    version=OPTIONS["version"],
     author="Alve Svarén",
     author_email="alve@hotmail.se",
     description="A feature-rich command line interface for minecraft servers",
