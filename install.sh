@@ -17,6 +17,10 @@ if [ $DEV = true ]; then
 fi
 
 sudo -v
+if [ $? -ne 0 ]; then
+    echo -e "$ERROR_STR Sudo verification failed!"
+    exit 1
+fi
 echo -e "\e[1mInstallation script for MCCLI"
 echo
 
