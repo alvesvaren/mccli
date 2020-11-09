@@ -30,7 +30,6 @@ class Server:
     @property
     def version(self):
         if not self._version:
-            print("I should do something")
             try:
                 with self.path.joinpath(OPTIONS["paths"]["server_dat"]).open() as file:
                     data = load(file)
@@ -50,7 +49,6 @@ class Server:
                 dump({"name": version.name, "provider": version.provider.value}, file)
 
             with self.path.joinpath(OPTIONS["paths"]["server_jar"]).open("wb") as file:
-                print("Hello from the download")
                 file.write(version.download())
         
         self._version = version
