@@ -14,7 +14,7 @@ parser.add_argument("--verbose", "-v", action="store_true")
 
 # Commands that need the server argument to be required
 commands = {
-    "modify": subparsers.add_parser("modify"),
+    "modify": subparsers.add_parser("modify", aliases=["change"]),
     "update": subparsers.add_parser("update"),
     "status": subparsers.add_parser("status"),
     "runner": subparsers.add_parser("runner"),
@@ -23,7 +23,7 @@ commands = {
     "disable": subparsers.add_parser("disable"),
     "enable": subparsers.add_parser("enable"),
     "restart": subparsers.add_parser("restart"),
-    "attach": subparsers.add_parser("attach", aliases=["console", "a"]),
+    "attach": subparsers.add_parser("attach", aliases=["console", "a", "c"]),
     "run": subparsers.add_parser("run", aliases=["exec", "execute", "command"])
 }
 
