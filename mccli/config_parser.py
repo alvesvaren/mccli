@@ -1,5 +1,5 @@
 
-from typing import Any, Callable, Dict, List, Text, TextIO, Union
+from typing import Any, Callable, Dict, TextIO, Union
 import re
 LoadDict = Dict[str, Union[str, int, float, bool]]
 _types = {

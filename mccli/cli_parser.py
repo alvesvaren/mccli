@@ -2,10 +2,9 @@ import argparse
 from argparse import Namespace
 from .utils import VERSION
 import os
-import re
 import mccli
 from pathlib import Path
-from .server_utils import Server, get_server_service
+from .server_utils import get_server_service
 from .online_utils import ServerProvider
 from .commands import (attach, create, modify, run, update, runner)
 

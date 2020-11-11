@@ -1,4 +1,3 @@
-from mccli.utils import VERSION
 from .commands import *
 from .cli_parser import run_parser
 

@@ -3,12 +3,10 @@ from .tmux_utils import get_pane, get_session
 from .config_parser import dump, load
 from typing import List, Union
 from .server_utils import Server
-from . import config_parser
 from .online_utils import ServerProvider, ServerVersion, find_version, get_versions
 from .utils import choice, confirm, OPTIONS, custom_choice, SERVER_BASE_PATH
 import mccli
 import os
-from pathlib import Path
 
 os.chdir(SERVER_BASE_PATH)
 VERBOSE: bool = OPTIONS["verbose_output"]
