@@ -35,8 +35,10 @@ def subprocess_open():
 
 def run_jar(name: str):
     server = Server(name)
+    args = ["java"] + server.args + ["-jar", "server.jar", "nogui"]
+    print("Running jar:", args)
     process = subprocess.Popen(
-        ["java", "-jar", "server.jar", "nogui"], cwd=server.path)
+        args, cwd=server.path)
     return process.wait()
 
 
