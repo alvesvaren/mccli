@@ -17,7 +17,7 @@ sudo ./install.sh
 ```bash
 cd /opt/mccli
 sudo -u minecraft git pull
-./install.sh
+sudo ./install.sh
 ```
 
 ## Basic usage
@@ -29,7 +29,7 @@ mccli console servername
 ```
 
 ## Develop
-
+> This is sort of broken right now but it should work after you've installed mccli at least once using the "Install" instructions
 1. Clone the repository wherever you'd like
 2. `cd mccli`
 3. ```bash
@@ -38,4 +38,4 @@ mccli console servername
    source env/bin/activate
    pip install -r requirements.txt
    ```
-4. Run your local version with: `python -m mccli` (instead of just `mccli`) when you have the virtual env activated
+4. Make sure the mccli binary is correct (`whereis mccli` should return something that's in this repository)

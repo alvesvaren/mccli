@@ -9,7 +9,7 @@ OPTIONS = {
         "server_dat": "server.dat",
         "server_jar": "server.jar"
     },
-    "version": "0.0.13",
+    "version": "0.0.14",
     "service_template_name": "minecraft-server@{}.service",
     "verbose_output": False
 }
