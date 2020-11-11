@@ -11,7 +11,7 @@ OPTIONS = {
         "server_dat": "server.dat",
         "server_jar": "server.jar"
     },
-    "version": "0.0.11",
+    "version": "0.0.12",
     "service_template_name": "minecraft-server@{name}.service",
     "verbose_output": False
 }
