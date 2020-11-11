@@ -1,3 +1,4 @@
+from mccli.tmux_utils import get_pane, get_session
 from .config_parser import dump, load
 from typing import List, Union
 from .server_utils import Server
@@ -94,8 +95,11 @@ def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
     if type(command) != str:
         command = " ".join(command)
     print(f"Running '{command}' in mc-{name}")
-    exit(os.system(f"/usr/bin/tmux send-keys -t mc-{name} '{command}' ENTER"))
+    get_pane(get_session("mc-"+name)).send_keys(command)
+    exit(0)
+    # exit(os.system(f"/usr/bin/tmux send-keys -t mc-{name} '{command}' ENTER"))
 
 def attach(name: str, *, verbose: bool = VERBOSE):
     print(f"Attach to console of server named {name}")
-    exit(os.system(f"/usr/bin/tmux attach -t mc-{name}"))
+    get_session("mc-"+name).attach_session()
+    # exit(os.system(f"/usr/bin/tmux attach -t mc-{name}"))

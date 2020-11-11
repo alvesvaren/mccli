@@ -1,3 +1,4 @@
+from mccli.tmux_utils import create_session, get_server
 from subprocess import Popen
 import subprocess
 import os
@@ -31,14 +32,24 @@ def subprocess_open():
 
 
 def system_open():
-    return os.system("java -jar server.jar nogui")
+    process = subprocess.Popen("java -jar server.jar nogui", shell=True)
+    return process.wait()
 
-def tmux_fork(name: str) -> int:
+def start_tmux(name: str) -> int:
+    session_name = "mc-" + name
     print("Creating new mccli run session")
-    exit1 = os.system(f'/usr/bin/tmux new-session -ds mc-{name} "mccli runner {name}"')
-    print("Waiting for session to exit (when the server gets stopped)")
-    exit2 = os.system(f'/usr/bin/tmux wait-for mc-{name}-done')
-    exit(exit1 if exit1 != 0 else exit2)
+    session = create_session(session_name, f"mccli runner {name}")
+    if session:
+        print("Waiting for session to exit (when the server gets stopped)")
+        while get_server().has_session(session_name):
+            time.sleep(1)
+    else:
+        print(f"Session did not start, possibly already a session with the name {session_name}")
+        return 1
+    return 0
+    # exit1 = os.system(f'/usr/bin/tmux new-session -ds mc-{name} "mccli runner {name}"')
+    # exit2 = os.system(f'/usr/bin/tmux wait-for mc-{name}-done')
+    # exit(exit1 if exit1 != 0 else exit2)
     # print("Waiting for server to exit")
     # if exit_code == 0:
     #     try:
