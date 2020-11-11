@@ -32,7 +32,7 @@ def subprocess_open():
 
 
 def system_open():
-    process = subprocess.Popen("java -jar server.jar nogui", shell=True)
+    process = subprocess.Popen(["java", "-jar", "server.jar", "nogui"])
     return process.wait()
 
 def start_tmux(name: str) -> int:
