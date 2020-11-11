@@ -33,7 +33,9 @@ mccli console servername
 ```
 
 ## Develop
+
 > This is sort of broken right now but it should work after you've installed mccli at least once using the "Install" instructions
+
 1. Clone the repository wherever you'd like
 2. `cd mccli`
 3. ```bash

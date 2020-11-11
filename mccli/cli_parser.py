@@ -7,7 +7,8 @@ import mccli
 from pathlib import Path
 from .server_utils import get_server_service
 from .online_utils import ServerProvider
-from .commands import (attach, create, list_command, modify, run, update, runner)
+from .commands import (attach, create, list_command,
+                       modify, run, update, runner)
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
@@ -117,8 +118,10 @@ def stop(args: Namespace):
 def restart(args: Namespace):
     get_server_service(args.server).restart()
 
+
 def list_wrapper(args: Namespace):
     list_command(verbose=args.verbose)
+
 
 commands["create"].set_defaults(runner=create_wrapper)
 commands["modify"].set_defaults(runner=modify_wrapper)

@@ -21,5 +21,3 @@ def get(arg: str):
         return eval(f"OPTIONS{values}")
     except Exception:
         exit(1)
-
-

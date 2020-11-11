@@ -110,6 +110,7 @@ def attach(name: str, *, verbose: bool = VERBOSE):
     get_session("mc-"+name).attach_session()
     # exit(os.system(f"/usr/bin/tmux attach -t mc-{name}"))
 
+
 def list_command(*, verbose: bool = VERBOSE):
     sessions = get_sessions_matching("mc-")
     session_names = [i.get("session_name")[3:] for i in sessions]
