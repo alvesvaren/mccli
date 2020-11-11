@@ -91,7 +91,7 @@ def runner(name: str, in_tmux: bool = False, *, verbose: bool = VERBOSE):
     if in_tmux:
         code = run_tmux(name)
     else:
-        code = run_jar()
+        code = run_jar(name)
     exit(code)
 
 def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):

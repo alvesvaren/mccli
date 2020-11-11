@@ -13,4 +13,4 @@ if __name__ == "__main__":
             exit()
         elif sys.argv[2] == "tmux-keep-alive":
             exit(run_tmux(server.name))
-    exit(run_jar())
+    exit(run_jar(server.name))
