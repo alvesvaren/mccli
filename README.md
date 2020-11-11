@@ -4,6 +4,10 @@ This is a collection of some python modules/scripts that makes it easier for you
 
 ## Install
 
+Before installing, make sure the dependencies are installed.
+Ubuntu/debian: `sudo apt install python3-libtmux python3-dbus python3-requests`
+Arch: `sudo pacman -S python-libtmux python-dbus python-requests`
+
 ```bash
 sudo useradd minecraft
 sudo mkdir /opt/mccli && sudo chown minecraft:minecraft /opt/mccli
