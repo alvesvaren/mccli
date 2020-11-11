@@ -1,3 +1,4 @@
+from mccli.tmux_utils import get_pane, get_session
 from typing import List
 from .config_parser import dump, load, LoadDict
 from .systemd import BusType, Service
@@ -37,9 +38,9 @@ class Server:
 
     def run_command(self, command: str):
         """
-        Runs a command in the server console
+        Runs a command in the server console (only for tmux runners)
         """
-        raise NotImplementedError
+        get_pane(get_session("mc-"+self.name)).send_keys(command)
     
     @property
     def args(self) -> List[str]:

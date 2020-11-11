@@ -100,7 +100,7 @@ def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
     if type(command) != str:
         command = " ".join(command)
     print(f"Running '{command}' in mc-{name}")
-    get_pane(get_session("mc-"+name)).send_keys(command)
+    Server(name).run_command(command)
     exit(0)
     # exit(os.system(f"/usr/bin/tmux send-keys -t mc-{name} '{command}' ENTER"))
 
