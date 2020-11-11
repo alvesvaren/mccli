@@ -1,5 +1,5 @@
 from .runner import run_jar, run_tmux
-from .tmux_utils import get_pane, get_session
+from .tmux_utils import get_pane, get_session, get_sessions_matching
 from .config_parser import dump, load
 from typing import List, Union
 from .server_utils import Server
@@ -109,3 +109,12 @@ def attach(name: str, *, verbose: bool = VERBOSE):
     print(f"Attach to console of server named {name}")
     get_session("mc-"+name).attach_session()
     # exit(os.system(f"/usr/bin/tmux attach -t mc-{name}"))
+
+def list_command(*, verbose: bool = VERBOSE):
+    sessions = get_sessions_matching("mc-")
+    session_names = [i.get("session_name")[3:] for i in sessions]
+    print("Currently running servers:")
+    for name in session_names:
+        server = Server(name)
+        print(f"  - {server.name} : {server.version}")
+    # print(session_names)

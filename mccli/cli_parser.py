@@ -1,12 +1,13 @@
 import argparse
 from argparse import Namespace
+from mccli.tmux_utils import get_sessions_matching
 from .utils import VERSION
 import os
 import mccli
 from pathlib import Path
 from .server_utils import get_server_service
 from .online_utils import ServerProvider
-from .commands import (attach, create, modify, run, update, runner)
+from .commands import (attach, create, list_command, modify, run, update, runner)
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
@@ -15,7 +16,7 @@ parser.add_argument("--verbose", "-v", action="store_true")
 # Commands that need the server argument to be required
 commands = {
     "modify": subparsers.add_parser("modify", aliases=["change"]),
-    "update": subparsers.add_parser("update"),
+    "update": subparsers.add_parser("update", aliases=["upgrade"]),
     "status": subparsers.add_parser("status"),
     "runner": subparsers.add_parser("runner"),
     "start": subparsers.add_parser("start"),
@@ -32,7 +33,8 @@ commands_optional_server = {
 }
 
 commands_no_server = {
-    "upgrade": subparsers.add_parser("upgrade")
+    "upgrade-cli": subparsers.add_parser("upgrade-cli"),
+    "list": subparsers.add_parser("list")
 }
 
 for k, v in commands.items():
@@ -115,6 +117,8 @@ def stop(args: Namespace):
 def restart(args: Namespace):
     get_server_service(args.server).restart()
 
+def list_wrapper(args: Namespace):
+    list_command(verbose=args.verbose)
 
 commands["create"].set_defaults(runner=create_wrapper)
 commands["modify"].set_defaults(runner=modify_wrapper)
@@ -122,13 +126,14 @@ commands["update"].set_defaults(runner=update_wrapper)
 commands["attach"].set_defaults(runner=attach_wrapper)
 commands["status"].set_defaults(runner=status_wrapper)
 commands["runner"].set_defaults(runner=runner_wrapper)
-commands["upgrade"].set_defaults(runner=upgrade)
+commands["update"].set_defaults(runner=upgrade)
 commands["enable"].set_defaults(runner=enable)
 commands["start"].set_defaults(runner=start)
 commands["disable"].set_defaults(runner=upgrade)
 commands["stop"].set_defaults(runner=stop)
 commands["restart"].set_defaults(runner=restart)
 commands["run"].set_defaults(runner=run_wrapper)
+commands["list"].set_defaults(runner=list_wrapper)
 parser.set_defaults(runner=status_wrapper)
 
 

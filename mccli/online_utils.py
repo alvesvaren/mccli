@@ -40,6 +40,9 @@ class ServerVersion():
 
     def __repr__(self):
         return f"<ServerVersion name='{self.name}' type='{self.provider}'>"
+    
+    def __str__(self):
+        return f"{self.provider.value}@{self.name}"
 
     def download(self) -> bytes:
         """
