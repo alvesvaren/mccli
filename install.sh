@@ -7,7 +7,7 @@ INFO_STR="\e[34m\e[1mInfo:\e[0m"
 DIM_QUOTE="\e[2m'\e[22m"
 
 options() {
-    JQ_OUT=python -
+    VALUE=$(python -m mccli.options "$@")
 }
 
 sudo -v
@@ -15,7 +15,9 @@ if [ $? -ne 0 ]; then
     echo -e "$ERROR_STR Sudo verification failed!"
     exit 1
 fi
-echo -e "\e[1mInstallation script for MCCLI"
+
+options version
+echo -e "\e[1mInstallation script for MCCLI $VALUE"
 echo
 
 echo -e "$INFO_STR Checking of minecraft user exists"
@@ -27,10 +29,11 @@ fi
 echo -e "$SUCCESS_STR Seems to exist!"
 echo
 
-echo -e "$INFO_STR Creating directory /opt/minecraft-servers"
-sudo mkdir -p /opt/minecraft-servers
-echo -e "$INFO_STR Changing ownership of /opt/minecraft-servers to 'minecraft:minecraft'"
-sudo chown minecraft:minecraft /opt/minecraft-servers
+options paths.server_base
+echo -e "$INFO_STR Creating directory $VALUE"
+sudo mkdir -p $VALUE
+echo -e "$INFO_STR Changing ownership of $VALUE to 'minecraft:minecraft'"
+sudo chown minecraft:minecraft $VALUE
 echo
 
 echo -e "$INFO_STR Checking validity of sudoers file..."
@@ -51,8 +54,9 @@ echo -e "$INFO_STR Installing mccli with pip"
 sudo pip3 install .
 echo
 
+options service_template_name ""
 echo -e "$INFO_STR Linking service template with systemd"
-sudo systemctl enable $PWD/minecraft-server@.service
+sudo systemctl enable $PWD/$VALUE
 echo -e "$INFO_STR Reloading daemons"
 sudo systemctl daemon-reload
 echo
