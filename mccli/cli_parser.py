@@ -48,14 +48,17 @@ commands["create"].add_argument(
 
 commands["modify"].add_argument("key")
 commands["modify"].add_argument("value")
-commands["modify"].add_argument("--file", required=False, default="server.properties")
+commands["modify"].add_argument(
+    "--file", required=False, default="server.properties")
 
 commands["enable"].add_argument("--now", required=False, action="store_true")
 commands["disable"].add_argument("--now", required=False, action="store_true")
 
-commands["runner"].add_argument("--tmux", required=False, action="store_true", help="Keep the process alive while the tmux session exists", dest="tmux")
+commands["runner"].add_argument("--tmux", required=False, action="store_true",
+                                help="Keep the process alive while the tmux session exists", dest="tmux")
 
 commands["run"].add_argument("command", nargs="+")
+
 
 def create_wrapper(args: Namespace):
     create(name=args.server, provider=ServerProvider(
@@ -79,11 +82,14 @@ def status_wrapper(args: Namespace):
 def runner_wrapper(args: Namespace):
     runner(name=args.server, in_tmux=args.tmux, verbose=args.verbose)
 
+
 def run_wrapper(args: Namespace):
     run(name=args.server, command=args.command, verbose=args.verbose)
 
+
 def attach_wrapper(args: Namespace):
     attach(name=args.server, verbose=args.verbose)
+
 
 def upgrade(args: Namespace):
     os.chdir(Path(mccli.__file__).parent.resolve())
@@ -93,17 +99,22 @@ def upgrade(args: Namespace):
 def enable(args: Namespace):
     get_server_service(args.server).enable(args.now)
 
+
 def start(args: Namespace):
     get_server_service(args.server).start()
+
 
 def disable(args: Namespace):
     get_server_service(args.server).disable(args.now)
 
+
 def stop(args: Namespace):
     get_server_service(args.server).stop()
 
+
 def restart(args: Namespace):
     get_server_service(args.server).restart()
+
 
 commands["create"].set_defaults(runner=create_wrapper)
 commands["modify"].set_defaults(runner=modify_wrapper)

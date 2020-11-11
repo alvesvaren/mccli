@@ -16,12 +16,14 @@ OPTIONS = {
     "verbose_output": False
 }
 
+
 def get(arg: str):
     values = "".join([f'["{i}"]' for i in arg.split('.')])
     try:
         print(eval(f"OPTIONS{values}"))
     except Exception:
         exit(1)
+
 
 if __name__ == "__main__":
     get(argv[1])

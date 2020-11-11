@@ -11,6 +11,7 @@ import os
 os.chdir(SERVER_BASE_PATH)
 VERBOSE: bool = OPTIONS["verbose_output"]
 
+
 def select_version(provider: ServerProvider = None, *, verbose: bool = VERBOSE) -> mccli.ServerVersion:
     """
     Allow the user to select version
@@ -55,15 +56,16 @@ def create(name: str = None, provider: ServerProvider = None, *, verbose: bool =
                 print("Accepted eula.")
     return server
 
+
 def update(name: str, version: ServerVersion = None, *, verbose: bool = VERBOSE):
     if not version:
         version = select_version()
-    
+
     server = Server(name)
-    
+
     if verbose:
         print("Replacing server.jar with new version")
-    
+
     server.version = version
 
 
@@ -84,6 +86,7 @@ def modify(name: str, key: str, value: Union[str, int, float, bool], file_name: 
             dump(old_data, file)
         raise error
 
+
 def runner(name: str, in_tmux: bool = False, *, verbose: bool = VERBOSE):
     code = 0
     if in_tmux:
@@ -92,6 +95,7 @@ def runner(name: str, in_tmux: bool = False, *, verbose: bool = VERBOSE):
         code = run_jar(name)
     exit(code)
 
+
 def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
     if type(command) != str:
         command = " ".join(command)
@@ -99,6 +103,7 @@ def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
     get_pane(get_session("mc-"+name)).send_keys(command)
     exit(0)
     # exit(os.system(f"/usr/bin/tmux send-keys -t mc-{name} '{command}' ENTER"))
+
 
 def attach(name: str, *, verbose: bool = VERBOSE):
     print(f"Attach to console of server named {name}")

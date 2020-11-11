@@ -36,13 +36,13 @@ class Server:
                     self._version = get_version(
                         data["name"], ServerProvider(data["provider"]))
             except FileNotFoundError:
-                
+
                 return None
         return self._version
 
     @version.setter
     def version(self, version: ServerVersion):
-        
+
         self.path.mkdir(exist_ok=True)
         if not self.version or not (self._version.provider == version.provider and self.version.name == version.name):
             with self.path.joinpath(OPTIONS["paths"]["server_dat"]).open("w") as file:
@@ -50,8 +50,9 @@ class Server:
 
             with self.path.joinpath(OPTIONS["paths"]["server_jar"]).open("wb") as file:
                 file.write(version.download())
-        
+
         self._version = version
+
 
 def get_server_service(name: str):
     return Service(f"minecraft-server@{name}.service", BusType.SYSTEM)

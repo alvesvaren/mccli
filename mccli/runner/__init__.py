@@ -7,6 +7,7 @@ import time
 from threading import Thread
 import signal
 
+
 def handler(process: Popen):
     while process.poll() is None:
         cmd = input("> ").encode("utf-8")
@@ -32,11 +33,12 @@ def subprocess_open():
         process.kill()
 
 
-
 def run_jar(name: str):
     server = Server(name)
-    process = subprocess.Popen(["java", "-jar", "server.jar", "nogui"], cwd=server.path)
+    process = subprocess.Popen(
+        ["java", "-jar", "server.jar", "nogui"], cwd=server.path)
     return process.wait()
+
 
 def run_tmux(name: str) -> int:
     session_name = "mc-" + name
@@ -54,7 +56,8 @@ def run_tmux(name: str) -> int:
             time.sleep(1)
         print("Session stopped")
     else:
-        print(f"Session did not start, possibly already a session with the name {session_name}")
+        print(
+            f"Session did not start, possibly already a session with the name {session_name}")
         return 1
     return 0
     # exit1 = os.system(f'/usr/bin/tmux new-session -ds mc-{name} "mccli runner {name}"')
