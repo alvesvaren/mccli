@@ -1,4 +1,5 @@
-from mccli.tmux_utils import get_pane, get_session
+from .runner import run_jar, run_tmux
+from .tmux_utils import get_pane, get_session
 from .config_parser import dump, load
 from typing import List, Union
 from .server_utils import Server
@@ -85,11 +86,13 @@ def modify(name: str, key: str, value: Union[str, int, float, bool], file_name: 
             dump(old_data, file)
         raise error
 
-def runner(name: str, fork: bool = False, *, verbose: bool = VERBOSE):
-    cmd = f"python -m mccli.runner {name}"
-    if fork:
-        cmd += " tmux-keep-alive"
-    exit(os.system(cmd))
+def runner(name: str, in_tmux: bool = False, *, verbose: bool = VERBOSE):
+    code = 0
+    if in_tmux:
+        code = run_tmux(name)
+    else:
+        code = run_jar()
+    exit(code)
 
 def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
     if type(command) != str:

@@ -1,7 +1,7 @@
 import mccli
 import sys
 import os
-from . import subprocess_open, system_open, start_tmux
+from . import subprocess_open, run_jar, run_tmux
 
 
 if __name__ == "__main__":
@@ -12,5 +12,5 @@ if __name__ == "__main__":
             subprocess_open()
             exit()
         elif sys.argv[2] == "tmux-keep-alive":
-            exit(start_tmux(server.name))
-    exit(system_open())
+            exit(run_tmux(server.name))
+    exit(run_jar())

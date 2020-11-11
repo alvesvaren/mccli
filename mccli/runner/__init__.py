@@ -31,11 +31,11 @@ def subprocess_open():
         process.kill()
 
 
-def system_open():
+def run_jar():
     process = subprocess.Popen(["java", "-jar", "server.jar", "nogui"])
     return process.wait()
 
-def start_tmux(name: str) -> int:
+def run_tmux(name: str) -> int:
     session_name = "mc-" + name
     print("Creating new mccli run session")
     session = create_session(session_name, f"mccli runner {name}")

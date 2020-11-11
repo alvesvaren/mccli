@@ -54,7 +54,7 @@ commands["modify"].add_argument("--file", required=False, default="server.proper
 commands["enable"].add_argument("--now", required=False, action="store_true")
 commands["disable"].add_argument("--now", required=False, action="store_true")
 
-commands["runner"].add_argument("--keep-alive", required=False, action="store_true", help="Keep the process alive while the tmux session exists", dest="keepalive")
+commands["runner"].add_argument("--tmux", required=False, action="store_true", help="Keep the process alive while the tmux session exists", dest="tmux")
 
 commands["run"].add_argument("command", nargs="+")
 
@@ -78,7 +78,7 @@ def status_wrapper(args: Namespace):
 
 
 def runner_wrapper(args: Namespace):
-    runner(name=args.server, fork=args.keepalive, verbose=args.verbose)
+    runner(name=args.server, in_tmux=args.tmux, verbose=args.verbose)
 
 def run_wrapper(args: Namespace):
     run(name=args.server, command=args.command, verbose=args.verbose)
