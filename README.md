@@ -45,3 +45,19 @@ mccli console servername
    pip install -r requirements.txt
    ```
 4. Make sure the mccli binary is correct (`whereis mccli` should return something that's in this repository)
+
+
+## Project status
+ - [x] Code to interface with server files
+   - [x] Vanilla support
+   - [x] Paper support
+   - [ ] Spigot/Buildtools support
+   - [ ] Waterfall support
+   - [ ] Sponge support
+   - [ ] Bungeecord support
+ - [x] Code to manage virtual console sessions (for example tmux)
+ - [x] Systemd service (template) to start minecraft servers
+ - [ ] Code to manage systemd service
+ - [ ] Backup system (both automatic and manual)
+ - [ ] Plugin manager
+ - [ ] CLI autocompletion
