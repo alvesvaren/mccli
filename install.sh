@@ -61,8 +61,13 @@ echo -e "$INFO_STR Reloading daemons"
 sudo systemctl daemon-reload
 echo
 
-echo -e "$WARN_STR Make sure to add yourself to the ${DIM_QUOTE}minecraft$DIM_QUOTE group to be able to use mccli without entering sudo password"
-echo
-echo -e "$INFO_STR Most likely you are able to add yourself to the minecraft group by typing: ${DIM_QUOTE}sudo usermod -aG minecraft $USER$DIM_QUOTE"
-echo
+getent group minecraft >/dev/null
+if [ $? -ne 0 ]; then
+    echo -e "$WARN_STR Make sure to add yourself to the ${DIM_QUOTE}minecraft$DIM_QUOTE group to be able to use mccli without entering sudo password"
+    echo
+    echo -e "$INFO_STR Most likely you are able to add yourself to the minecraft group by typing: ${DIM_QUOTE}sudo usermod -aG minecraft $USER$DIM_QUOTE"
+    echo
+fi
+
 echo -e "$SUCCESS_STR MCCLI successfully installed!"
+
