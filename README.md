@@ -7,7 +7,7 @@ This is a collection of some python modules/scripts that makes it easier for you
 Before installing, make sure the dependencies are installed.
 
 ```bash
-# Ubuntu/debian:
+# Ubuntu/Debian:
 sudo apt install python3-libtmux python3-dbus python3-requests
 
 # Arch:
