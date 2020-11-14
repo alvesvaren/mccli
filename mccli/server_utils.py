@@ -5,6 +5,7 @@ from .systemd import BusType, Service
 from .online_utils import ServerVersion, ServerProvider, get_version
 from .utils import OPTIONS, SERVER_BASE_PATH
 import pathlib
+import os
 
 SERVER_DAT_PATH = OPTIONS["paths"]["server_dat"]
 
@@ -80,4 +81,6 @@ class Server:
 
 
 def get_server_service(name: str):
-    return Service(f"minecraft-server@{name}.service", BusType.SYSTEM)
+    if not "XDG_RUNTIME_DIR" in os.environ:
+        os.environ["XDG_RUNTIME_DIR"] = OPTIONS["paths"]["xdg_runtime_dir"].format(os.getuid())
+    return Service(f"minecraft-server@{name}.service", BusType.SESSION)

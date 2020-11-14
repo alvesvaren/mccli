@@ -70,7 +70,7 @@ class Unit:
             self._systemd,
             'org.freedesktop.systemd1.Manager'
         )
-        self._unit_path = self._manager.GetUnit(self.name)
+        self._unit_path = self._manager.LoadUnit(self.name)
         self._unit = self._bus.get_object(
             "org.freedesktop.systemd1",
             self._unit_path

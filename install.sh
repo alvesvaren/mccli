@@ -54,11 +54,17 @@ echo -e "$INFO_STR Installing mccli with pip"
 sudo pip3 install .
 echo
 
+echo -e "$INFO_STR Enabling lingering for minecraft account with systemd"
+sudo loginctl enable-linger minecraft
+echo
+
 options service_template_name ""
-echo -e "$INFO_STR Linking service template with systemd"
-sudo systemctl enable $PWD/$VALUE
-echo -e "$INFO_STR Reloading daemons"
-sudo systemctl daemon-reload
+OLD_VALUE=$VALUE
+options paths.xdg_runtime_dir `id -u minecraft`
+echo -e "$INFO_STR Linking service template with systemd (as minecraft user)"
+sudo -u minecraft XDG_RUNTIME_DIR=$VALUE systemctl enable --user $PWD/$OLD_VALUE
+echo -e "$INFO_STR Reloading daemons (as minecraft user)"
+sudo -u minecraft XDG_RUNTIME_DIR=$VALUE systemctl daemon-reload --user
 echo
 
 getent group minecraft >/dev/null
