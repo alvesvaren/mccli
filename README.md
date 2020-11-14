@@ -30,7 +30,7 @@ sudo ./install.sh
 
 ```bash
 mccli create servername
-mccli enable --now servername # doesn't really work right now, but this is how it's meant to be used, replace with 'sudo systemctl enabe --now minecraft-server@servername.service'
+mccli enable --now servername
 mccli console servername
 ```
 
