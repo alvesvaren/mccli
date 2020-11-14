@@ -59,7 +59,7 @@ mccli console servername
    - [ ] Bungeecord support
  - [x] Code to manage virtual console sessions (for example tmux)
  - [x] Systemd service (template) to start minecraft servers
- - [ ] Code to manage systemd service
+ - [x] Code to manage systemd service
  - [ ] Backup system (both automatic and manual)
  - [ ] Plugin manager
  - [ ] CLI autocompletion
