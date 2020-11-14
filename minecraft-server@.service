@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 WorkingDirectory=/opt/minecraft-servers/
 
-ExecStart=/usr/bin/mccli runner %i --tmux
+ExecStart=mccli runner %i --tmux
 
 [Install]
 WantedBy=default.target
