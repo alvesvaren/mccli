@@ -19,6 +19,7 @@ Then just follow these steps for a standard installation:
 
 ```bash
 sudo useradd minecraft
+sudo mkdir /home/minecraft && sudo chown minecraft:minecraft /home/minecraft
 sudo mkdir /opt/mccli && sudo chown minecraft:minecraft /opt/mccli
 sudo -u minecraft git clone https://github.com/alvesvaren/mccli.git /opt/mccli
 cd /opt/mccli
