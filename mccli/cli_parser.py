@@ -34,7 +34,6 @@ commands_optional_server = {
 }
 
 commands_no_server = {
-    "upgrade-cli": subparsers.add_parser("upgrade-cli"),
     "list": subparsers.add_parser("list")
 }
 
@@ -90,11 +89,6 @@ def attach_wrapper(args: Namespace):
     attach(name=args.server, verbose=args.verbose)
 
 
-def upgrade(args: Namespace):
-    os.chdir(Path(mccli.__file__).parent.resolve())
-    exit(os.system("git pull --ff-only"))
-
-
 def enable(args: Namespace):
     get_server_service(args.server).enable(args.now)
 
@@ -137,10 +131,9 @@ commands["update"].set_defaults(runner=update_wrapper)
 commands["attach"].set_defaults(runner=attach_wrapper)
 commands["status"].set_defaults(runner=status_wrapper)
 commands["runner"].set_defaults(runner=runner_wrapper)
-commands["upgrade-cli"].set_defaults(runner=upgrade)
 commands["enable"].set_defaults(runner=enable)
 commands["start"].set_defaults(runner=start)
-commands["disable"].set_defaults(runner=upgrade)
+commands["disable"].set_defaults(runner=disable)
 commands["stop"].set_defaults(runner=stop)
 commands["restart"].set_defaults(runner=restart)
 commands["run"].set_defaults(runner=run_wrapper)
