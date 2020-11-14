@@ -60,6 +60,8 @@ mccli console servername
 
 ## Project status
 
+### Planned features:
+
 -   [x] Code to interface with server files
     -   [x] Vanilla support
     -   [x] Paper support
@@ -73,3 +75,14 @@ mccli console servername
 -   [ ] Backup system (both automatic and manual)
 -   [ ] Plugin manager
 -   [ ] CLI autocompletion
+-   [ ] Colors when running commands
+
+### Other features that I might add in the future
+
+-   [ ] Web interface
+-   [ ] SSH server that just handles mccli
+    -   [ ] Client that can communicate using said ssh server
+-   [ ] REST api for use with some sort of client
+-   [ ] Command scheduling
+-   [ ] FTP server
+-   [ ] Access policies to manage user access to different servers
