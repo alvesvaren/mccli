@@ -76,6 +76,7 @@ mccli console servername
 -   [ ] Plugin manager
 -   [ ] CLI autocompletion
 -   [ ] Colors when running commands
+-   [ ] Support for comments when using config_parser.py
 
 ### Other features that I might add in the future
 
@@ -86,3 +87,4 @@ mccli console servername
 -   [ ] Command scheduling
 -   [ ] FTP server
 -   [ ] Access policies to manage user access to different servers
+-   [ ] Automatic port forwarding using UPnP
