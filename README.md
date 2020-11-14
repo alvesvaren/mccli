@@ -30,7 +30,7 @@ sudo ./install.sh
 
 ```bash
 cd /opt/mccli
-sudo -u minecraft git pull
+sudo -u minecraft git pull --ff-only
 sudo ./install.sh
 ```
 
