@@ -10,7 +10,7 @@ OPTIONS = {
         "server_jar": "server.jar",
         "xdg_runtime_dir": "/run/user/{}"
     },
-    "version": "0.1.0",
+    "version": "0.1.1",
     "service_template_name": "minecraft-server@{}.service",
     "verbose_output": False
 }

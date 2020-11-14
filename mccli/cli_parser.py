@@ -1,11 +1,11 @@
 import argparse
 from argparse import Namespace
-from mccli.tmux_utils import get_sessions_matching
+from mccli.tmux_utils import get_server, get_sessions_matching
 from .utils import VERSION
 import os
 import mccli
 from pathlib import Path
-from .server_utils import get_server_service
+from .server_utils import Server, get_server_service
 from .online_utils import ServerProvider
 from .commands import (attach, create, list_command,
                        modify, run, update, runner)
@@ -78,10 +78,6 @@ def update_wrapper(args: Namespace):
     update(name=args.server, verbose=args.verbose)
 
 
-def status_wrapper(args: Namespace):
-    print("MCCLI Version", VERSION)
-
-
 def runner_wrapper(args: Namespace):
     runner(name=args.server, in_tmux=args.tmux, verbose=args.verbose)
 
@@ -118,10 +114,22 @@ def stop(args: Namespace):
 def restart(args: Namespace):
     get_server_service(args.server).restart()
 
+def status_wrapper(args: Namespace):
+    service = get_server_service(args.server)
+    print(f"Status for server '{args.server}':")
+    print(" - Service state:", service.status.value, f"({service.sub_state})")
+    server = Server(args.server)
+    print(" - Minecraft version:", server.version)
+    print(" - Custom jvm args:", " ".join(server.args), end="\n\n")
+    if service.sub_state == "running":
+        print(f"* Attach to the server console by typing 'mccli attach {server.name}'")
 
 def list_wrapper(args: Namespace):
     list_command(verbose=args.verbose)
 
+def default_wrapper(args: Namespace):
+    print("MCCLI Version", VERSION, end="\n\n")
+    parser.print_usage()
 
 commands["create"].set_defaults(runner=create_wrapper)
 commands["modify"].set_defaults(runner=modify_wrapper)
@@ -137,7 +145,7 @@ commands["stop"].set_defaults(runner=stop)
 commands["restart"].set_defaults(runner=restart)
 commands["run"].set_defaults(runner=run_wrapper)
 commands["list"].set_defaults(runner=list_wrapper)
-parser.set_defaults(runner=status_wrapper)
+parser.set_defaults(runner=default_wrapper)
 
 
 def run_parser(*args, **kwargs):

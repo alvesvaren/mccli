@@ -108,7 +108,11 @@ class Unit:
 
     @property
     def status(self) -> SystemdStatusState:
-        raise NotImplementedError
+        return SystemdActiveState(self._unit_props.Get('org.freedesktop.systemd1.Unit', 'ActiveState'))
+
+    @property
+    def sub_state(self) -> str:
+        return self._unit_props.Get("org.freedesktop.systemd1.Unit", "SubState")
 
     @property
     def enablement(self) -> SystemdEnablementState:
