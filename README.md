@@ -24,7 +24,7 @@ sudo -u minecraft git pull
 sudo ./install.sh
 ```
 
-> **Note:** If upgrading from 0.0.14 or earlier, run `sudo rm /etc/systemd/system/minecraft-server@.service` and `sudo rm /usr/bin/mccli` before upgrading
+> **Note:** If upgrading from 0.0.14 or earlier, run `sudo systemctl disable /etc/systemd/system/minecraft-server@.service` and `sudo rm /usr/bin/mccli` before upgrading
 
 ## Basic usage
 
