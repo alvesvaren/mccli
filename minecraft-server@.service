@@ -3,10 +3,9 @@ Description=Minecraft server %i
 After=network.target
 
 [Service]
-Type=simple
-WorkingDirectory=/opt/minecraft-servers/
-
 ExecStart=mccli runner %i --tmux
+Restart=always
 
 [Install]
 WantedBy=default.target
+
