@@ -30,8 +30,7 @@ sudo ./install.sh
 
 ```bash
 cd /opt/mccli
-sudo -u minecraft git pull --ff-only
-sudo ./install.sh
+sudo ./update.sh
 ```
 
 > **Note:** If upgrading from 0.0.14 or earlier, run `sudo systemctl disable /etc/systemd/system/minecraft-server@.service` and `sudo rm /usr/bin/mccli` before upgrading
