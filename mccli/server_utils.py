@@ -11,12 +11,9 @@ SERVER_DAT_PATH = OPTIONS["paths"]["server_dat"]
 
 
 class Server:
-    def __init__(self, name: str, version: ServerVersion = None):
+    def __init__(self, name: str):
         # super().__init__(OPTIONS["service_template_name"].format(name=name))
         self.name = name
-        self._version = None
-        if version:
-            self.version = version
 
     @property
     def _dat_file_content(self):
@@ -38,6 +35,8 @@ class Server:
 
     @property
     def path(self) -> pathlib.Path:
+        self.path.mkdir(exist_ok=True)
+
         return SERVER_BASE_PATH.joinpath(self.name)
 
     def run_command(self, command: str):
@@ -69,17 +68,13 @@ class Server:
 
         return self._version
 
-    @version.setter
-    def version(self, version: ServerVersion):
+    def update(self, version: ServerVersion):
 
-        self.path.mkdir(exist_ok=True)
         self._dat_file_content = {
             "name": version.name, "provider": version.provider.value}
 
         with self.path.joinpath(OPTIONS["paths"]["server_jar"]).open("wb") as file:
             file.write(version.download())
-
-        self._version = version
 
 
 def get_server_service(name: str):

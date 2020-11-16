@@ -46,7 +46,8 @@ def create(name: str = None, provider: ServerProvider = None, *, verbose: bool =
     version = select_version(provider)
     if verbose:
         print(f"Downloading server.jar from {version.url}...", end="")
-    server = Server(name, version)
+    server = Server(name)
+    server.update(version)
     if verbose:
         print("DONE!")
     if confirm("Do you accept the Minecraft EULA (read at https://www.minecraft.net/eula)?"):
@@ -66,7 +67,7 @@ def update(name: str, version: ServerVersion = None, *, verbose: bool = VERBOSE)
     if verbose:
         print("Replacing server.jar with new version")
 
-    server.version = version
+    server.update(version)
 
 
 def modify(name: str, key: str, value: Union[str, int, float, bool], file_name: str = "server.properties", *, verbose: bool = VERBOSE):
