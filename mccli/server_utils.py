@@ -14,7 +14,9 @@ class Server:
     def __init__(self, name: str, version: ServerVersion = None):
         # super().__init__(OPTIONS["service_template_name"].format(name=name))
         self.name = name
-        self._version = version
+        self._version = None
+        if version:
+            self.version = verion
 
     @property
     def _dat_file_content(self):
