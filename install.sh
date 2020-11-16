@@ -7,7 +7,7 @@ INFO_STR="\e[34m\e[1mInfo:\e[0m"
 DIM_QUOTE="\e[2m'\e[22m"
 
 options() {
-    VALUE=$(python -m mccli.options "$@")
+    VALUE=$(python3 -m mccli.options "$@")
 }
 
 sudo -v
