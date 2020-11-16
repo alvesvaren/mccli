@@ -16,7 +16,7 @@ class Server:
         self.name = name
         self._version = None
         if version:
-            self.version = verion
+            self.version = version
 
     @property
     def _dat_file_content(self):
