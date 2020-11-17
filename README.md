@@ -72,8 +72,6 @@ mccli console servername
 -   [x] Systemd service (template) to start minecraft servers
 -   [x] Code to manage systemd service
 -   [ ] Backup system (both automatic and manual)
--   [ ] Plugin manager
--   [ ] CLI autocompletion
 -   [ ] Colors when running commands
 -   [ ] Support for comments when using config_parser.py
 
@@ -88,3 +86,5 @@ mccli console servername
 -   [ ] Access policies to manage user access to different servers
 -   [ ] Automatic port forwarding using UPnP
 -   [ ] YML file support when using modify command
+-   [ ] Plugin manager
+-   [ ] CLI autocompletion
