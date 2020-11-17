@@ -14,7 +14,6 @@ sudo apt install python3-libtmux python3-dbus python3-requests
 sudo pacman -S python-libtmux python-dbus python-requests
 ```
 
-
 Then just follow these steps for a standard installation:
 
 ```bash
@@ -46,6 +45,7 @@ mccli console servername
 ```
 
 ### All available commands
+
 | Command + arguments                                         | Description                                                                                | Example                                   |
 | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------ | -----------------------------------       |
 | `mccli create [name] [--provider {vanilla,papermc,spigot}]` | Creates a new server                                                                       | `mccli create example --provider vanilla` |
