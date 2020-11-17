@@ -62,6 +62,8 @@ mccli console servername
 | `mccli modify [--file] <name> <key> <value>`                | Modify the *server.properties* file (if no other was specified).                           | `mccli modify example server-port 25566`  |
 | `mccli`                                                     | Shows the version and usage of mccli                                                       | `mccli`                                   |
 
+> **Note:** You can run any command with the argument *-h* to show the usage for that specific command
+
 ## Develop
 
 > This is sort of broken right now but it should work after you've installed mccli at least once using the "Install" instructions
