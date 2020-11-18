@@ -61,16 +61,3 @@ def run_tmux(name: str) -> int:
             f"Session did not start, possibly already a session with the name {session_name}")
         return 1
     return 0
-    # exit1 = os.system(f'/usr/bin/tmux new-session -ds mc-{name} "mccli runner {name}"')
-    # exit2 = os.system(f'/usr/bin/tmux wait-for mc-{name}-done')
-    # exit(exit1 if exit1 != 0 else exit2)
-    # print("Waiting for server to exit")
-    # if exit_code == 0:
-    #     try:
-    #         while os.system(f"/usr/bin/tmux has-session -t mc-{name}") == 0:
-    #             time.sleep(1)
-    #         return 1
-    #     except KeyboardInterrupt:
-    #         print("Killing server as process was terminated")
-    #         return os.system(f"/usr/bin/tmux kill-session -t mc-{name}")
-    # return exit_code
