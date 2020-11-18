@@ -47,12 +47,11 @@ def run_tmux(name: str) -> int:
     print("Creating new mccli run session")
     session = create_session(session_name, f"mccli runner {name}")
     if session:
-        def handle_termination(num, stack):
+        def handle_interrupt(num, stack):
             print("Stopping server")
             get_pane(session).send_keys("stop")
 
-        signal.signal(signal.SIGTERM, handle_termination)
-        signal.signal(signal.SIGINT, handle_termination)
+        signal.signal(signal.SIGINT, handle_interrupt)
         print("Waiting for session to exit (when the server gets stopped)")
         while get_server().has_session(session_name):
             time.sleep(1)

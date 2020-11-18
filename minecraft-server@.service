@@ -5,6 +5,7 @@ After=network.target
 [Service]
 ExecStart=mccli runner %i --tmux
 Restart=always
+KillSignal=SIGINT
 
 [Install]
 WantedBy=default.target

@@ -14,6 +14,7 @@ class Server:
     def __init__(self, name: str):
         # super().__init__(OPTIONS["service_template_name"].format(name=name))
         self.name = name
+        self._version = None
 
     @property
     def _dat_file_content(self):
@@ -35,9 +36,10 @@ class Server:
 
     @property
     def path(self) -> pathlib.Path:
-        self.path.mkdir(exist_ok=True)
+        path = SERVER_BASE_PATH.joinpath(self.name)
+        path.mkdir(exist_ok=True)
 
-        return SERVER_BASE_PATH.joinpath(self.name)
+        return path
 
     def run_command(self, command: str):
         """
