@@ -14,7 +14,6 @@ sudo apt install python3-libtmux python3-dbus python3-requests
 sudo pacman -S python-libtmux python-dbus python-requests
 ```
 
-
 Then just follow these steps for a standard installation:
 
 ```bash
@@ -35,13 +34,35 @@ sudo ./update.sh
 
 > **Note:** If upgrading from 0.0.14 or earlier, run `sudo systemctl disable /etc/systemd/system/minecraft-server@.service` and `sudo rm /usr/bin/mccli` before upgrading
 
-## Basic usage
+## Usage
+
+### Basic usage
 
 ```bash
 mccli create servername
 mccli enable --now servername
 mccli console servername
 ```
+
+### All available commands
+
+| Command + arguments                                         | Description                                                                                | Example                                   |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------ | -----------------------------------       |
+| `mccli create [name] [--provider {vanilla,papermc,spigot}]` | Creates a new server                                                                       | `mccli create example --provider vanilla` |
+| `mccli update <name> [--provider {vanilla,papermc,spigot}]` | Change the server jar version                                                              | `mccli update example --provider papermc` |
+| `mccli status <name>`                                       | Shows the current (systemd) status for the specified server                                | `mccli status example`                    |
+| `mccli start <name>`                                        | Starts the specified server using systemd                                                  | `mccli start example`                     |
+| `mccli stop <name>`                                         | Stops the specified server using systemd                                                   | `mccli stop example`                      |
+| `mccli enable [--now] <name>`                               | Enable automatic starting of the server (on reboot). If called with `--now`, also start it | `mccli enable --now example`              |
+| `mccli disable [--now] <name>`                              | Disable automatic starting of the server. If called with `--now`, also stop it             | `mccli disable --now example`             |
+| `mccli restart <name>`                                      | Restart the server                                                                         | `mccli restart example`                   |
+| `mccli attach <name>`                                       | Attach to the server console. To detach, Press ***Ctrl+B** followed by **d***              | `mccli attach example`                    |
+| `mccli run <name> <command>`                                | Send the specified command to the server (using tmux send-keys)                            | `mccli run example say Hello everyone!`   |
+| `mccli list`                                                | List all running servers (that has an active tmux session) and their version               | `mccli list`                              |
+| `mccli modify [--file] <name> <key> <value>`                | Modify the *server.properties* file (if no other was specified).                           | `mccli modify example server-port 25566`  |
+| `mccli`                                                     | Shows the version and usage of mccli                                                       | `mccli`                                   |
+
+> **Note:** You can run any command with the argument *-h* to show the usage for that specific command
 
 ## Develop
 
@@ -72,8 +93,6 @@ mccli console servername
 -   [x] Systemd service (template) to start minecraft servers
 -   [x] Code to manage systemd service
 -   [ ] Backup system (both automatic and manual)
--   [ ] Plugin manager
--   [ ] CLI autocompletion
 -   [ ] Colors when running commands
 -   [ ] Support for comments when using config_parser.py
 
@@ -88,3 +107,5 @@ mccli console servername
 -   [ ] Access policies to manage user access to different servers
 -   [ ] Automatic port forwarding using UPnP
 -   [ ] YML file support when using modify command
+-   [ ] Plugin manager
+-   [ ] CLI autocompletion
