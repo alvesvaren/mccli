@@ -25,9 +25,9 @@ def loads(string: str) -> LoadDict:
     output: LoadDict = {}
     for line in string.splitlines():
         if line.startswith("#"):
-            # TODO: Add support for comments
-            continue
-        key, value = line.strip().split("=")
+            key, value = "#", line[1:]
+        else:
+            key, value = line.strip().split("=")
         if re.match(r"^\d+$", value):
             value = cast_if_possible(int, value)
         elif re.match(r"^\d+\.\d+$", value):
@@ -53,5 +53,8 @@ def dumps(obj: LoadDict) -> str:
                     value = _key
         except ValueError:
             continue
-        output += f"{key}={value}\n"
+        if key == "#":
+            output += f"#{value}\n"
+        else:
+            output += f"{key}={value}\n"
     return output
