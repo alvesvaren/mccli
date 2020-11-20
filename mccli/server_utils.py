@@ -80,5 +80,6 @@ class Server:
 
 def get_server_service(name: str):
     if not "XDG_RUNTIME_DIR" in os.environ:
-        os.environ["XDG_RUNTIME_DIR"] = OPTIONS["paths"]["xdg_runtime_dir"].format(os.getuid())
+        os.environ["XDG_RUNTIME_DIR"] = OPTIONS["paths"]["xdg_runtime_dir"].format(
+            os.getuid())
     return Service(f"minecraft-server@{name}.service", BusType.SESSION)
