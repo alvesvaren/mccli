@@ -7,8 +7,10 @@ import mccli
 from pathlib import Path
 from .server_utils import Server, get_server_service
 from .online_utils import ServerProvider
-from .commands import (attach, create, list_command,
-                       modify, run, update, runner)
+from .commands import (
+    attach, create, list_command,
+    modify, run, update, runner
+)
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
@@ -113,6 +115,7 @@ def restart(args: Namespace):
     print(f"Restarting server '{args.server}'")
     get_server_service(args.server).restart()
 
+
 def status_wrapper(args: Namespace):
     service = get_server_service(args.server)
     print(f"Status for server '{args.server}':")
@@ -121,14 +124,18 @@ def status_wrapper(args: Namespace):
     print(" - Minecraft version:", server.version)
     print(" - Custom jvm args:", " ".join(server.args), end="\n\n")
     if service.sub_state == "running":
-        print(f"* Attach to the server console by typing 'mccli attach {server.name}'")
+        print(
+            f"* Attach to the server console by typing 'mccli attach {server.name}'")
+
 
 def list_wrapper(args: Namespace):
     list_command(verbose=args.verbose)
 
+
 def default_wrapper(args: Namespace):
     print("MCCLI Version", VERSION, end="\n\n")
     parser.print_usage()
+
 
 command_runners = {
     "create": create_wrapper,
