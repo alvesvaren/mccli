@@ -101,13 +101,11 @@ def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
     print(f"Running '{command}' in mc-{name}")
     Server(name).run_command(command)
     exit(0)
-    # exit(os.system(f"/usr/bin/tmux send-keys -t mc-{name} '{command}' ENTER"))
 
 
 def attach(name: str, *, verbose: bool = VERBOSE):
     print(f"Attach to console of server named {name}")
     get_session("mc-"+name).attach_session()
-    # exit(os.system(f"/usr/bin/tmux attach -t mc-{name}"))
 
 
 def list_command(*, verbose: bool = VERBOSE):
@@ -117,4 +115,3 @@ def list_command(*, verbose: bool = VERBOSE):
     for name in session_names:
         server = Server(name)
         print(f"  - {server.name} : {server.version}")
-    # print(session_names)

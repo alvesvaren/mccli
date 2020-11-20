@@ -148,6 +148,4 @@ parser.set_defaults(runner=default_wrapper)
 
 def run_parser(*args, **kwargs):
     result = parser.parse_args(*args, **kwargs)
-    # if result.verbose:
-    #     print(result)
     result.runner(result)
