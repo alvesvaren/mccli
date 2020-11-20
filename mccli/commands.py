@@ -1,7 +1,7 @@
 from .runner import run_jar, run_tmux
 from .tmux_utils import get_pane, get_session, get_sessions_matching
 from .config_parser import dump, load
-from typing import List, Union
+from typing import List, Optional, Union
 from .server_utils import Server
 from .online_utils import ServerProvider, ServerVersion, find_version, get_versions
 from .utils import choice, confirm, OPTIONS, custom_choice, SERVER_BASE_PATH
@@ -44,12 +44,10 @@ def create(name: str = None, provider: ServerProvider = None, *, verbose: bool =
         name = custom_choice("What should the server be called?")
 
     version = select_version(provider)
-    if verbose:
-        print(f"Downloading server.jar from {version.url}...", end="")
+    print(f"Downloading {OPTIONS['paths']['server_jar']} from {version.url}...", end="")
     server = Server(name)
     server.update(version)
-    if verbose:
-        print("DONE!")
+    print("DONE!")
     if confirm("Do you accept the Minecraft EULA (read at https://www.minecraft.net/eula)?"):
         with server.path.joinpath("eula.txt").open("w") as file:
             file.write("eula=true\n")
@@ -63,18 +61,18 @@ def update(name: str, version: ServerVersion = None, *, verbose: bool = VERBOSE)
         version = select_version()
 
     server = Server(name)
-
-    if verbose:
-        print("Replacing server.jar with new version")
-
+    print(f"Downloading and replacing {OPTIONS['paths']['server_jar']} with new version")
     server.update(version)
 
 
-def modify(name: str, key: str, value: Union[str, int, float, bool], file_name: str = "server.properties", *, verbose: bool = VERBOSE):
+def modify(name: str, key: str, value: Optional[Union[str, int, float, bool]] = None, file_name: str = "server.properties", *, verbose: bool = VERBOSE):
     server = Server(name)
     absolute_path = server.path.joinpath(file_name)
     with absolute_path.open() as file:
         old_data = load(file)
+        if value == None:
+            print(f"Current value for {key} is: {old_data[key]}")
+            return
         new_data = old_data
     try:
         new_data[key] = value

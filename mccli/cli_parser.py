@@ -90,22 +90,27 @@ def attach_wrapper(args: Namespace):
 
 
 def enable(args: Namespace):
+    print(f"Enabling server '{args.server}'")
     get_server_service(args.server).enable(args.now)
 
 
 def start(args: Namespace):
+    print(f"Starting server '{args.server}'")
     get_server_service(args.server).start()
 
 
 def disable(args: Namespace):
+    print(f"Disabling server '{args.server}'")
     get_server_service(args.server).disable(args.now)
 
 
 def stop(args: Namespace):
+    print(f"Stopping server '{args.server}'")
     get_server_service(args.server).stop()
 
 
 def restart(args: Namespace):
+    print(f"Restarting server '{args.server}'")
     get_server_service(args.server).restart()
 
 def status_wrapper(args: Namespace):
