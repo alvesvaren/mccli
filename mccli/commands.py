@@ -44,7 +44,8 @@ def create(name: str = None, provider: ServerProvider = None, *, verbose: bool =
         name = custom_choice("What should the server be called?")
 
     version = select_version(provider)
-    print(f"Downloading {OPTIONS['paths']['server_jar']} from {version.url}...", end="")
+    print(
+        f"Downloading {OPTIONS['paths']['server_jar']} from {version.url}...", end="")
     server = Server(name)
     server.update(version)
     print("DONE!")
@@ -61,7 +62,8 @@ def update(name: str, version: ServerVersion = None, *, verbose: bool = VERBOSE)
         version = select_version()
 
     server = Server(name)
-    print(f"Downloading and replacing {OPTIONS['paths']['server_jar']} with new version")
+    print(
+        f"Downloading and replacing {OPTIONS['paths']['server_jar']} with new version")
     server.update(version)
 
 
