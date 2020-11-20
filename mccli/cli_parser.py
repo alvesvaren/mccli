@@ -130,19 +130,24 @@ def default_wrapper(args: Namespace):
     print("MCCLI Version", VERSION, end="\n\n")
     parser.print_usage()
 
-commands["create"].set_defaults(runner=create_wrapper)
-commands["modify"].set_defaults(runner=modify_wrapper)
-commands["update"].set_defaults(runner=update_wrapper)
-commands["attach"].set_defaults(runner=attach_wrapper)
-commands["status"].set_defaults(runner=status_wrapper)
-commands["runner"].set_defaults(runner=runner_wrapper)
-commands["enable"].set_defaults(runner=enable)
-commands["start"].set_defaults(runner=start)
-commands["disable"].set_defaults(runner=disable)
-commands["stop"].set_defaults(runner=stop)
-commands["restart"].set_defaults(runner=restart)
-commands["run"].set_defaults(runner=run_wrapper)
-commands["list"].set_defaults(runner=list_wrapper)
+command_runners = {
+    "create": create_wrapper,
+    "modify": modify_wrapper,
+    "update": update_wrapper,
+    "attach": attach_wrapper,
+    "status": status_wrapper,
+    "runner": runner_wrapper,
+    "list": list_wrapper,
+    "run": run_wrapper,
+    "start": start,
+    "stop": stop,
+    "enable": enable,
+    "disable": disable,
+    "restart": restart
+}
+
+for key, value in command_runners.items():
+    commands[key].set_defaults(runner=value)
 parser.set_defaults(runner=default_wrapper)
 
 
