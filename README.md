@@ -94,7 +94,7 @@ mccli console servername
 -   [x] Code to manage systemd service
 -   [ ] Backup system (both automatic and manual)
 -   [ ] Colors when running commands
--   [ ] Support for comments when using config_parser.py
+-   [x] Support for comments when using config_parser.py
 
 ### Other features that I might add in the future
 
