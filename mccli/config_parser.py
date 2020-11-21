@@ -23,9 +23,9 @@ def load(file: TextIO) -> LoadDict:
 
 def loads(string: str) -> LoadDict:
     output: LoadDict = {}
-    for line in string.splitlines():
+    for index, line in enumerate(string.splitlines()):
         if line.startswith("#"):
-            key, value = "#", line[1:]
+            key, value = "#" + str(index), line[1:]
         else:
             key, value = line.strip().split("=")
         if re.match(r"^\d+$", value):
@@ -53,7 +53,7 @@ def dumps(obj: LoadDict) -> str:
                     value = _key
         except ValueError:
             continue
-        if key == "#":
+        if key.startswith("#"):
             output += f"#{value}\n"
         else:
             output += f"{key}={value}\n"
