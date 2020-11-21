@@ -101,8 +101,12 @@ def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
     if type(command) != str:
         command = " ".join(command)
     print(f"Running '{command}' in mc-{name}")
-    Server(name).run_command(command)
-    exit(0)
+    try:
+        Server(name).run_command(command)
+    except Exception as error:
+        print("Could not run command in server (maybe the server isn't running?)")
+        if verbose:
+            print("Error:", error)
 
 
 def attach(name: str, *, verbose: bool = VERBOSE):
@@ -112,7 +116,7 @@ def attach(name: str, *, verbose: bool = VERBOSE):
     except Exception as error:
         print("Could not attach to session (maybe the server isn't running?)")
         if verbose:
-            print(error)
+            print("Error:", error)
 
 
 def list_command(*, verbose: bool = VERBOSE):
