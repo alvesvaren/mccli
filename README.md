@@ -34,6 +34,8 @@ sudo ./update.sh
 
 > **Note:** If upgrading from 0.0.14 or earlier, run `sudo systemctl disable /etc/systemd/system/minecraft-server@.service` and `sudo rm /usr/bin/mccli` before upgrading
 
+> **Another note:** If upgrading from between 0.1.6 and 0.1.9, you might need to run `sudo -u minecraft git reset --hard origin/master` and then re-run the script `./update.sh` 
+
 ## Usage
 
 ### Basic usage
@@ -56,7 +58,7 @@ mccli console servername
 | `mccli enable [--now] <name>`                               | Enable automatic starting of the server (on reboot). If called with `--now`, also start it | `mccli enable --now example`              |
 | `mccli disable [--now] <name>`                              | Disable automatic starting of the server. If called with `--now`, also stop it             | `mccli disable --now example`             |
 | `mccli restart <name>`                                      | Restart the server                                                                         | `mccli restart example`                   |
-| `mccli attach <name>`                                       | Attach to the server console. To detach, Press ***Ctrl+B** followed by **d***              | `mccli attach example`                    |
+| `mccli attach <name>`                                       | Attach to the server console. To detach, Press ***Ctrl+b** followed by **d***              | `mccli attach example`                    |
 | `mccli run <name> <command>`                                | Send the specified command to the server (using tmux send-keys)                            | `mccli run example say Hello everyone!`   |
 | `mccli list`                                                | List all running servers (that has an active tmux session) and their version               | `mccli list`                              |
 | `mccli modify [--file] <name> <key> <value>`                | Modify the *server.properties* file (if no other was specified).                           | `mccli modify example server-port 25566`  |
