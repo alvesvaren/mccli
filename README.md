@@ -1,6 +1,6 @@
 # mccli
 
-This is a collection of some python modules/scripts that makes it easier for you to manager minecraft servers on linux (and probably other) OSes.
+This is a small program and library that makes it much easier to manage minecraft servers on linux (and probably other) OSes. It provides some easy to use commands that allows you to for example, upgrade the server binary, create a new server or change the server port etc. just with one command. It also makes it easy to attach to the server console from the command line.
 
 ## Install
 
