@@ -33,6 +33,7 @@ sudo ./update.sh
 ```
 
 > **Note:** If upgrading from 0.0.14 or earlier, run `sudo systemctl disable /etc/systemd/system/minecraft-server@.service` and `sudo rm /usr/bin/mccli` before upgrading
+> **Another note:** If upgrading from between 0.1.6 and 0.1.9, you might need to run `sudo -u minecraft git reset --hard origin/master` and then re-run the script `./update.sh` 
 
 ## Usage
 
