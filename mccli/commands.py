@@ -106,8 +106,13 @@ def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
 
 
 def attach(name: str, *, verbose: bool = VERBOSE):
-    print(f"Attach to console of server named {name}")
-    get_session("mc-"+name).attach_session()
+    print(f"Attaching to console of server named {name}")
+    try:
+        get_session("mc-"+name).attach_session()
+    except Exception as error:
+        print("Could not attach to session (maybe the server isn't running?)")
+        if verbose:
+            print(error)
 
 
 def list_command(*, verbose: bool = VERBOSE):
