@@ -107,6 +107,7 @@ def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
         print("Could not run command in server (maybe the server isn't running?)")
         if verbose:
             print("Error:", error)
+        exit(1)
 
 
 def attach(name: str, *, verbose: bool = VERBOSE):
@@ -117,10 +118,17 @@ def attach(name: str, *, verbose: bool = VERBOSE):
         print("Could not attach to session (maybe the server isn't running?)")
         if verbose:
             print("Error:", error)
+        exit(1)
 
 
 def list_command(*, verbose: bool = VERBOSE):
-    sessions = get_sessions_matching("mc-")
+    try:
+        sessions = get_sessions_matching("mc-")
+    except Exception as error:
+        print("Could not list sessions, is there any servers running?")
+        if verbose:
+            print("Error:", error)
+        exit(1)
     session_names = [i.get("session_name")[3:] for i in sessions]
     print("Currently running servers:")
     for name in session_names:
