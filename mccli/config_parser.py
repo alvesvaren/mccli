@@ -25,6 +25,7 @@ def loads(string: str) -> LoadDict:
     output: LoadDict = {}
     for index, line in enumerate(string.splitlines()):
         if line.startswith("#"):
+            # Not that "good" solution but works well
             key, value = "#" + str(index), line[1:]
         else:
             key, value = line.strip().split("=")
