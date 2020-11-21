@@ -2,9 +2,6 @@ import argparse
 from argparse import Namespace
 from mccli.tmux_utils import get_server, get_sessions_matching
 from .utils import VERSION
-import os
-import mccli
-from pathlib import Path
 from .server_utils import Server, get_server_service
 from .online_utils import ServerProvider
 from .commands import (
