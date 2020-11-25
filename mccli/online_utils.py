@@ -13,7 +13,7 @@ class ServerProvider(Enum):
     """
     VANILLA = "vanilla"
     PAPERMC = "papermc"
-    SPIGOT = "spigot"
+    # SPIGOT = "spigot"
     WATERFALL = "waterfall"
 
 
@@ -167,8 +167,8 @@ def get_versions(provider: ServerProvider) -> List[ServerVersion]:
     elif provider == ServerProvider.WATERFALL:
         return get_waterfall_versions()
 
-    elif provider == ServerProvider.SPIGOT:
-        raise NotImplementedError("Spigot support is not implemented")
+    # elif provider == ServerProvider.SPIGOT:
+    #     raise NotImplementedError("Spigot support is not implemented")
 
 
 def find_version(name: str, versions: List[ServerVersion]) -> Union[ServerVersion, None]:
