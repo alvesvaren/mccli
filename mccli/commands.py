@@ -17,9 +17,8 @@ def select_version(provider: ServerProvider = None, *, verbose: bool = VERBOSE) 
     Allow the user to select version
     """
     if not provider:
-        providers = ["vanilla", "papermc"]
         provider = mccli.ServerProvider(
-            providers[choice("Select provider", providers)])
+            list(mccli.ServerProvider)[choice("Select provider", [provider.value for provider in mccli.ServerProvider])])
     if verbose:
         print("\nSelected", provider.value, "provider.")
         print("Fetching versions from provider...", end="")

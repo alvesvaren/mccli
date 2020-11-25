@@ -4,7 +4,7 @@ from enum import Enum
 from . import utils
 
 URLS: Dict[str, str] = utils.OPTIONS["urls"]
-PAPER_BASE_URL = URLS["papermc"].rstrip("/")
+PAPER_BASE_URL = URLS["paperbase"].rstrip("/")
 
 
 class ServerProvider(Enum):
@@ -14,6 +14,7 @@ class ServerProvider(Enum):
     VANILLA = "vanilla"
     PAPERMC = "papermc"
     SPIGOT = "spigot"
+    WATERFALL = "waterfall"
 
 
 class VanillaVersionType(Enum):
@@ -75,13 +76,24 @@ class VanillaVersion(ServerVersion):
         return version_data["downloads"]["server"]["url"]
 
 
-class PaperVersion(ServerVersion):
-    def __init__(self, name: str):
-        super().__init__(name, ServerProvider.PAPERMC)
+class PaperBaseVersion(ServerVersion):
+    def __init__(self, name: str, provider: ServerProvider, project_id: str):
+        super().__init__(name, provider)
+        self._base_url = PAPER_BASE_URL.format(project_id)
 
     def _get_url(self) -> str:
-        version_data = requests.get(f"{PAPER_BASE_URL}/{self.name}").json()
-        return f"{PAPER_BASE_URL}/{self.name}/{version_data['builds']['latest']}/download"
+        version_data = requests.get(f"{self._base_url}/{self.name}").json()
+        print(self._base_url)
+        return f"{self._base_url}/{self.name}/{version_data['builds']['latest']}/download"
+
+
+class PaperVersion(PaperBaseVersion):
+    def __init__(self, name: str):
+        super().__init__(name, ServerProvider.PAPERMC, "paper")
+
+class WaterfallVersion(PaperBaseVersion):
+    def __init__(self, name: str):
+        super().__init__(name, ServerProvider.WATERFALL, "waterfall")
 
 
 def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False, old_versions: bool = False, all_versions: bool = False) -> List[ServerVersion]:
@@ -109,6 +121,17 @@ def get_vanilla_versions(*, releases: bool = True, snapshots: bool = False, old_
             version["id"], version))
     return versions
 
+_paper_providers = {
+    "paper": PaperVersion,
+    "waterfall": WaterfallVersion
+}
+def _get_paper_project_versions(project_id: str) -> List[ServerVersion]:
+    versions: List[ServerVersion] = []
+    provided_versions = requests.get(PAPER_BASE_URL.format(project_id)).json()
+    for version in provided_versions["versions"]:
+        versions.append(_paper_providers[project_id](version))
+
+    return versions
 
 def get_paper_versions() -> List[ServerVersion]:
     """
@@ -119,13 +142,10 @@ def get_paper_versions() -> List[ServerVersion]:
     latest_version = versions[0]
     ```
     """
-    versions: List[ServerVersion] = []
+    return _get_paper_project_versions("paper")
 
-    provided_versions = requests.get(PAPER_BASE_URL).json()
-    for version in provided_versions["versions"]:
-        versions.append(PaperVersion(version))
-
-    return versions
+def get_waterfall_versions() -> List[ServerVersion]:
+    return _get_paper_project_versions("waterfall")
 
 
 def get_versions(provider: ServerProvider) -> List[ServerVersion]:
@@ -143,6 +163,9 @@ def get_versions(provider: ServerProvider) -> List[ServerVersion]:
 
     elif provider == ServerProvider.PAPERMC:
         return get_paper_versions()
+
+    elif provider == ServerProvider.WATERFALL:
+        return get_waterfall_versions()
 
     elif provider == ServerProvider.SPIGOT:
         raise NotImplementedError("Spigot support is not implemented")
