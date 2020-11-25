@@ -87,9 +87,7 @@ mccli console servername
 -   [x] Code to interface with server files
     -   [x] Vanilla support
     -   [x] Paper support
-    -   [ ] Spigot/Buildtools support
-    -   [ ] Bungeecord support
-    -   [ ] Waterfall support
+    -   [x] Waterfall support
 -   [x] Code to manage virtual console sessions (for example tmux)
 -   [x] Systemd service (template) to start minecraft servers
 -   [x] Code to manage systemd service
@@ -97,6 +95,8 @@ mccli console servername
 ### Other features that I might add in the future
 
 -   [ ] Web interface
+-   [ ] Spigot/Buildtools support
+-   [ ] Bungeecord support
 -   [ ] SSH server that just handles mccli
     -   [ ] Client that can communicate using said ssh server
 -   [ ] REST api for use with some sort of client
