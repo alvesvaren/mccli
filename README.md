@@ -91,6 +91,7 @@ mccli console servername
 -   [x] Code to manage virtual console sessions (for example tmux)
 -   [x] Systemd service (template) to start minecraft servers
 -   [x] Code to manage systemd service
+-   [ ] Backup system (both automatic and manual)
 
 ### Other features that I might add in the future
 
@@ -108,4 +109,3 @@ mccli console servername
 -   [ ] Plugin manager
 -   [ ] Colors when running commands
 -   [ ] CLI autocompletion
--   [ ] Backup system (both automatic and manual)
