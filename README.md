@@ -88,8 +88,6 @@ mccli console servername
     -   [x] Vanilla support
     -   [x] Paper support
     -   [ ] Spigot/Buildtools support
-    -   [ ] Waterfall support
-    -   [ ] Sponge support
     -   [ ] Bungeecord support
 -   [x] Code to manage virtual console sessions (for example tmux)
 -   [x] Systemd service (template) to start minecraft servers
