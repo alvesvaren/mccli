@@ -37,7 +37,7 @@ sudo chown minecraft:minecraft $VALUE
 echo
 
 echo -e "$INFO_STR Checking validity of sudoers file..."
-visudo -scf ./sudoers.conf
+sudo visudo -scf ./sudoers.conf
 if [ $? -ne 0 ]; then
     echo -e "$ERROR_STR ./sudoers.conf is invalid!"
     echo -e "$WARN_STR Aborting. Check output"
