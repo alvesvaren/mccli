@@ -8,7 +8,7 @@ Before installing, make sure the dependencies are installed.
 
 ```bash
 # Ubuntu/Debian:
-sudo apt install python3-libtmux python3-dbus python3-requests
+sudo apt install python3-libtmux python3-dbus python3-requests dbus-user-session
 
 # Arch:
 sudo pacman -S python-libtmux python-dbus python-requests
