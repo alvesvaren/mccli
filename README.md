@@ -92,6 +92,7 @@ mccli console servername
 -   [x] Systemd service (template) to start minecraft servers
 -   [x] Code to manage systemd service
 -   [ ] Backup system (both automatic and manual)
+-   [ ] LXC support for running the servers in separate file systems (safer and easier to backup)
 
 ### Other features that I might add in the future
 
