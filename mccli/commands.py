@@ -101,7 +101,7 @@ def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
         command = " ".join(command)
     print(f"Running '{command}' in mc-{name}")
     try:
-        Server(name).run_command(command)
+        Server(name).run_command(" ".join(command))
     except Exception as error:
         print("Could not run command in server (maybe the server isn't running?)")
         if verbose:

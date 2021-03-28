@@ -1,5 +1,5 @@
 from mccli.tmux_utils import get_pane, get_session
-from typing import List
+from typing import List, cast
 from .config_parser import dump, load, LoadDict
 from .systemd import BusType, Service
 from .online_utils import ServerVersion, ServerProvider, get_version
@@ -44,12 +44,14 @@ class Server:
         """
         Runs a command in the server console (only for tmux runners)
         """
-        get_pane(get_session("mc-"+self.name)).send_keys(command)
+        session = get_session("mc-"+self.name)
+        if session:
+            get_pane(session).send_keys(command)
 
     @property
     def args(self) -> List[str]:
         try:
-            return self._dat_file_content["args"].split(" ")
+            return cast(str, self._dat_file_content["args"]).split(" ")
         except (FileNotFoundError, KeyError):
             return []
 
@@ -63,7 +65,7 @@ class Server:
             try:
                 data = self._dat_file_content
                 self._version = get_version(
-                    data["name"], ServerProvider(data["provider"]))
+                    cast(str, data["name"]), ServerProvider(data["provider"]))
             except KeyError:
                 return None
 

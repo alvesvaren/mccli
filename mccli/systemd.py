@@ -78,27 +78,36 @@ class Unit:
         self._unit_props = dbus.Interface(
             self._unit, "org.freedesktop.DBus.Properties")
 
-    def start(self) -> int:
+    def start(self):
         """
-        Start a server, returns exit status if failed, else 0
+        Start a service
         """
         self._manager.StartUnit(self.name, "replace")
 
     def stop(self):
+        """
+        Stops a service
+        """
         self._manager.StopUnit(self.name, "replace")
 
-    def restart(self) -> int:
+    def restart(self):
+        """
+        Restarts a service
+        """
         self._manager.RestartUnit(self.name, "replace")
 
-    def enable(self, now: bool = False) -> Union[int, None]:
+    def enable(self, now: bool = False):
         """
-        Retruns exit code from start if called with now
+        Enables a service, and starts it if now=True
         """
         self._manager.EnableUnitFiles([self.name], False, False)
         if now:
             self.start()
 
     def disable(self, now: bool = False):
+        """
+        Disables a service, and stops it if now=True
+        """
         self._manager.DisableUnitFiles([self.name], False)
         if now:
             self.stop()
@@ -107,7 +116,7 @@ class Unit:
         self._manager.ReloadUnit(self.name, "replace")
 
     @property
-    def status(self) -> SystemdStatusState:
+    def status(self) -> SystemdActiveState:
         return SystemdActiveState(self._unit_props.Get('org.freedesktop.systemd1.Unit', 'ActiveState'))
 
     @property

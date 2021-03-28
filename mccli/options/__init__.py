@@ -1,3 +1,7 @@
+import json
+from pathlib import Path
+
+
 OPTIONS = {
     "urls": {
         "paperbase": "https://papermc.io/api/v1/{}",
@@ -10,11 +14,17 @@ OPTIONS = {
         "server_jar": "server.jar",
         "xdg_runtime_dir": "/run/user/{}"
     },
-    "version": "0.2.0",
+    "version": "0.2.1",
     "service_template_name": "minecraft-server@{}.service",
     "verbose_output": False
 }
 
+_custom_options_path = Path(__file__).joinpath("options.json").resolve()
+
+if _custom_options_path.is_file():
+    with _custom_options_path.open() as file:
+        _custom_options = json.load(file)
+        OPTIONS.update(_custom_options)
 
 def get(arg: str):
     values = "".join([f'["{i}"]' for i in arg.split('.')])

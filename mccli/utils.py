@@ -71,4 +71,4 @@ def custom_choice(msg: str, default: Union[str, None] = None) -> str:
     except KeyboardInterrupt:
         print()
         raise KeyboardInterrupt
-    return value if value else default
+    return value if value else (default or "")

@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import Any, List, Optional, Union, cast
 import libtmux as tm
 import re
 
@@ -10,7 +10,7 @@ def set_server(server: tm.Server):
     _server = server
 
 
-def get_session(name: str) -> tm.Session:
+def get_session(name: str) -> Optional[tm.Session]:
     return _server.find_where({"session_name": name})
 
 
@@ -18,12 +18,11 @@ def get_server():
     return _server
 
 
-def get_sessions_matching(name: Union[re.Pattern, str]) -> List[tm.Session]:
+def get_sessions_matching(name: Union[re.Pattern[str], str]) -> List[tm.Session]:
     matching_sessions: List[tm.Session] = []
-    if type(name) == str:
-        name = re.compile(name)
+    name_pattern: re.Pattern[str] = re.compile(cast(Any, name))
     for session in get_sessions():
-        if name.match(session.get("session_name")):
+        if name_pattern.match(session.get("session_name") or ""):
             matching_sessions.append(session)
     return matching_sessions
 

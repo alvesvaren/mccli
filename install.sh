@@ -60,7 +60,7 @@ echo
 
 options service_template_name ""
 OLD_VALUE=$VALUE
-options paths.xdg_runtime_dir `id -u minecraft`
+options paths.xdg_runtime_dir $(id -u minecraft)
 echo -e "$INFO_STR Linking service template with systemd (as minecraft user)"
 sudo -u minecraft XDG_RUNTIME_DIR=$VALUE systemctl enable --user $PWD/$OLD_VALUE
 echo -e "$INFO_STR Reloading daemons (as minecraft user)"
@@ -76,4 +76,3 @@ if [ $? -ne 0 ]; then
 fi
 
 echo -e "$SUCCESS_STR MCCLI successfully installed!"
-
