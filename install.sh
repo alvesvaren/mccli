@@ -29,6 +29,28 @@ fi
 echo -e "$SUCCESS_STR Seems to exist!"
 echo
 
+echo -e "$INFO_STR Checking if the minecraft user has a home folder"
+if [ ! -d /home/minecraft ]; then
+    echo -e "$ERROR_STR The folder at /home/minecraft does not exist"
+    exit 1
+fi
+echo -e "$SUCCESS_STR Seems to exist!"
+echo
+
+echo -e "$INFO_STR Checking if the minecraft user owns and has write permissions to their home folder"
+info=($(stat -c "%U %a" /home/minecraft))
+owner=${info[0]}
+perm=${info[1]}
+if [[ $owner != "minecraft" ]]; then
+    echo -e "$ERROR_STR The minecraft user does not own '/home/minecraft'"
+    exit 1
+fi
+if ((($perm & 0200) == 0)); then
+    echo -e "$ERROR_STR The minecraft user does not have write permissions to /home/minecraft"
+    exit 1
+fi
+echo -e "$SUCCESS_STR Permissions seems correct"
+
 options paths.server_base
 echo -e "$INFO_STR Creating directory $VALUE"
 sudo mkdir -p $VALUE
@@ -62,7 +84,7 @@ options service_template_name ""
 OLD_VALUE=$VALUE
 options paths.xdg_runtime_dir $(id -u minecraft)
 echo -e "$INFO_STR Linking service template with systemd (as minecraft user)"
-sudo -u minecraft XDG_RUNTIME_DIR=$VALUE systemctl enable --user $PWD/$OLD_VALUE
+sudo -u minecraft XDG_RUNTIME_DIR=$VALUE systemctl link --user $PWD/$OLD_VALUE
 echo -e "$INFO_STR Reloading daemons (as minecraft user)"
 sudo -u minecraft XDG_RUNTIME_DIR=$VALUE systemctl daemon-reload --user
 echo
