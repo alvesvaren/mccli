@@ -60,11 +60,16 @@ mccli console servername
 | `mccli restart <name>`                                      | Restart the server                                                                         | `mccli restart example`                   |
 | `mccli attach <name>`                                       | Attach to the server console. To detach, Press **_Ctrl+b_ followed by _d_**                | `mccli attach example`                    |
 | `mccli run <name> <command>`                                | Send the specified command to the server (using tmux send-keys)                            | `mccli run example say Hello everyone!`   |
+| `mccli runner [--tmux] <name>`                              | Run the specified server in this tty. If called with `--tmux`, starts in a tmux session    | `mccli runner example`                    |
 | `mccli list`                                                | List all running servers (that has an active tmux session) and their version               | `mccli list`                              |
 | `mccli modify [--file] <name> <key> <value>`                | Modify the _server.properties_ file (if no other was specified).                           | `mccli modify example server-port 25566`  |
 | `mccli`                                                     | Shows the version and usage of mccli                                                       | `mccli`                                   |
 
 > **Note:** You can run any command with the argument _-h_ to show the usage for that specific command
+
+## Help! My server doesn't start!
+
+You are probably using the wrong java version or you are missing some dependency. Try running the server using `mccli runner <name>` and see why it errors out.
 
 ## Develop
 
@@ -92,7 +97,8 @@ mccli console servername
 -   [x] Systemd service (template) to start minecraft servers
 -   [x] Code to manage systemd service
 -   [ ] Backup system (both automatic and manual)
--   [ ] LXC support for running the servers in separate file systems (safer and easier to backup)
+-   [ ] LXC (or possibly systemd-nspawn) support for running the servers in separate file systems (safer and easier to backup)
+-   [ ] Colors when running some commands
 
 ### Other features that I might add in the future
 
@@ -102,11 +108,10 @@ mccli console servername
 -   [ ] SSH server that just handles mccli
     -   [ ] Client that can communicate using said ssh server
 -   [ ] REST api for use with some sort of client
--   [ ] Command scheduling
+-   [ ] Command scheduling (you could probably do this with crontab already)
 -   [ ] FTP server
 -   [ ] Access policies to manage user access to different servers
 -   [ ] Automatic port forwarding using UPnP
 -   [ ] YML file support when using modify command
 -   [ ] Plugin manager
--   [ ] Colors when running commands
 -   [ ] CLI autocompletion
