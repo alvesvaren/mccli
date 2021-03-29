@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -e
 
 ERROR_STR="\e[31m\e[1mError:\e[0m"
 SUCCESS_STR="\e[32m\e[1mSuccess:\e[0m"
@@ -70,6 +70,8 @@ echo
 
 echo -e "$INFO_STR Adding sudoers file to sudoers.d"
 sudo cp ./sudoers.conf /etc/sudoers.d/10-mccli
+echo -e "$INFO_STR Changing permissions of mccli's sudoers file to 644"
+sudo chmod 644 /etc/sudoers.d/10-mccli
 echo
 
 echo -e "$INFO_STR Installing mccli with pip"
