@@ -97,11 +97,11 @@ def runner(name: str, in_tmux: bool = False, *, verbose: bool = VERBOSE):
 
 
 def run(name: str, command: Union[List[str], str], *, verbose: bool = VERBOSE):
-    if type(command) != str:
+    if type(command) is not str:
         command = " ".join(command)
     print(f"Running '{command}' in mc-{name}")
     try:
-        Server(name).run_command(" ".join(command))
+        Server(name).run_command(command)
     except Exception as error:
         print("Could not run command in server (maybe the server isn't running?)")
         if verbose:
