@@ -1,4 +1,5 @@
-#!/bin/sh -e
+#!/bin/bash
+set -e
 
 ERROR_STR="\e[31m\e[1mError:\e[0m"
 SUCCESS_STR="\e[32m\e[1mSuccess:\e[0m"
