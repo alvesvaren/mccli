@@ -9,9 +9,12 @@ Before installing, make sure the dependencies are installed.
 ```bash
 # Ubuntu/Debian:
 sudo apt install python3-libtmux python3-dbus python3-requests dbus-user-session tmux python3-pip
+# You would probably want a java runtime too: 
+sudo apt install openjdk-11-jre-headless
 
 # Arch:
 sudo pacman -S python-libtmux python-dbus python-requests
+# JRE: jre-openjdk-headless
 ```
 
 Then just follow these steps for a standard installation:
