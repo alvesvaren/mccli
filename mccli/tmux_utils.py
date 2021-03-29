@@ -18,9 +18,9 @@ def get_server():
     return _server
 
 
-def get_sessions_matching(name: Union[re.Pattern[str], str]) -> List[tm.Session]:
+def get_sessions_matching(name: Union[re.Pattern, str]) -> List[tm.Session]:
     matching_sessions: List[tm.Session] = []
-    name_pattern: re.Pattern[str] = re.compile(cast(Any, name))
+    name_pattern: re.Pattern = re.compile(cast(Any, name))
     for session in get_sessions():
         if name_pattern.match(session.get("session_name") or ""):
             matching_sessions.append(session)
