@@ -151,3 +151,5 @@ cython_debug/
 
 # Local History for Visual Studio Code
 .history/
+
+mccli/config.json

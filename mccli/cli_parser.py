@@ -58,6 +58,9 @@ commands["disable"].add_argument("--now", required=False, action="store_true")
 commands["runner"].add_argument("--tmux", required=False, action="store_true",
                                 help="Keep the process alive while the tmux session exists", dest="tmux")
 
+commands["runner"].add_argument("--container", required=False, action="store_true",
+                                help="Run the command in a separate rootfs for an extra layer of security", dest="container")
+
 commands["run"].add_argument("command", nargs="+")
 
 
@@ -77,7 +80,7 @@ def update_wrapper(args: Namespace):
 
 
 def runner_wrapper(args: Namespace):
-    runner(name=args.server, in_tmux=args.tmux, verbose=args.verbose)
+    runner(name=args.server, in_tmux=args.tmux, in_container=args.container, verbose=args.verbose)
 
 
 def run_wrapper(args: Namespace):

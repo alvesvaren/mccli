@@ -1,0 +1,12 @@
+[Unit]
+Description=Minecraft server container %i
+After=network.target
+
+[Service]
+ExecStart=mccli-priv runner %i --tmux --container
+Restart=always
+KillSignal=SIGINT
+
+[Install]
+WantedBy=default.target
+

@@ -20,5 +20,5 @@ setuptools.setup(
         "Operating System :: POSIX :: Linux",
     ],
     python_requires='>=3.7',
-    scripts=["mccli/bin/mccli"]
+    scripts=["mccli/bin/mccli", "mccli/bin/mccli-priv"]
 )

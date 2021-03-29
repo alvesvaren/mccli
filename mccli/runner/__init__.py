@@ -1,5 +1,6 @@
 from mccli.server_utils import Server
 from mccli.tmux_utils import create_session, get_server, get_session, get_pane
+from mccli.utils import OPTIONS, SERVER_BASE_PATH
 from subprocess import Popen
 import subprocess
 import os
@@ -33,19 +34,38 @@ def subprocess_open():
         process.kill()
 
 
+def get_args(server: Server):
+    return ["java"] + server.args + ["-jar", "server.jar", "nogui"]
+
+
 def run_jar(name: str):
     server = Server(name)
-    args = ["java"] + server.args + ["-jar", "server.jar", "nogui"]
+    args = get_args(server)
     print("Running jar:", args)
     process = subprocess.Popen(
         args, cwd=server.path)
     return process.wait()
 
 
-def run_tmux(name: str) -> int:
+def run_container(name: str):
+    server = Server(name)
+    args = get_args(server)
+    print("Spawning jar in container:", args)
+    cmd = f"systemd-nspawn -M mc-{name} --read-only -UD {OPTIONS['paths']['rootfs_image']} \
+        --private-users=0 --bind {str(server.path.resolve())}:/server \
+        --chdir=/server su minecraft -c \"{' '.join(args)}\""
+    print(cmd)
+    process = subprocess.Popen(cmd, shell=True)
+    return process.wait()
+
+
+def run_tmux(name: str, container: bool = False) -> int:
     session_name = "mc-" + name
     print("Creating new mccli run session")
-    session = create_session(session_name, f"mccli runner {name}")
+    cmd = f"mccli runner {name}"
+    if container:
+        cmd = f"mccli-priv runner {name} --container"
+    session = create_session(session_name, cmd)
     if session:
         def handle_interrupt(num, stack):
             print("Stopping server")

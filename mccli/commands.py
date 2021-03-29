@@ -1,4 +1,4 @@
-from .runner import run_jar, run_tmux
+from .runner import run_container, run_jar, run_tmux
 from .tmux_utils import get_pane, get_session, get_sessions_matching
 from .config_parser import dump, load
 from typing import List, Optional, Union
@@ -87,10 +87,12 @@ def modify(name: str, key: str, value: Optional[Union[str, int, float, bool]] = 
         raise error
 
 
-def runner(name: str, in_tmux: bool = False, *, verbose: bool = VERBOSE):
+def runner(name: str, in_tmux: bool = False, in_container: bool = False, *, verbose: bool = VERBOSE):
     code = 0
     if in_tmux:
-        code = run_tmux(name)
+        code = run_tmux(name, in_container)
+    elif in_container:
+        code = run_container(name)
     else:
         code = run_jar(name)
     exit(code)

@@ -1,0 +1,4 @@
+#!/bin/sh
+# This is the same as the normal mccli binary
+# however, this runs the module as root
+sudo python3 -m mccli "$@"
