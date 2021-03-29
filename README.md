@@ -1,6 +1,6 @@
 # mccli
 
-This is a small program and library that makes it much easier to manage minecraft servers on linux (and probably other) OSes. It provides some easy to use commands that allows you to for example, upgrade the server binary, create a new server or change the server port etc. just with one command. It also makes it easy to attach to the server console from the command line.
+This is a small program and library that makes it much easier to manage minecraft servers on GNU/Linux (and probably other) OSes. It provides some easy to use commands that allows you to for example, upgrade the server binary, create a new server or change the server port etc. just with one command. It also makes it easy to attach to the server console from the command line.
 
 ## Install
 
@@ -9,9 +9,12 @@ Before installing, make sure the dependencies are installed.
 ```bash
 # Ubuntu/Debian:
 sudo apt install python3-libtmux python3-dbus python3-requests dbus-user-session tmux python3-pip
+# You would probably want a java runtime too: 
+sudo apt install openjdk-11-jre-headless
 
 # Arch:
 sudo pacman -S python-libtmux python-dbus python-requests
+# JRE: jre-openjdk-headless
 ```
 
 Then just follow these steps for a standard installation:
